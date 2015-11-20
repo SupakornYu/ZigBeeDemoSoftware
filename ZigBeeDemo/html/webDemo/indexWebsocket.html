@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>tornado WebSocket example</title>
+		<link type="text/css" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+		<!--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>-->
+		<script type="text/javascript" src="../../bower_components/jquery/dist/jquery.js"></script>
+		
+		
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		
+		<script type="text/javascript" src="../../js/websocketProcess.js"></script>
+		
+	</head>
+	<body>
+		<div class="container">
+			<h1>ZigBee Demo</h1>
+			<hr>
+			  WebSocket status : <span class="wsStatus"></span>
+			<hr>
+				<h3>List All Device</h3>
+
+				  <div class="row">
+					<div class="span4">
+					  <table id="tableDevice" class="table table-bordered table-condensed">
+						<tr>
+						  <th>Network id</th><th>Status</th>
+						</tr>
+						<tr id="row1">
+						  <td> 1 </td><td> id 1 </td>
+						</tr>
+					  </table>
+					</div>
+				  </div>
+
+			<hr>
+			
+		</div>
+	</body>
+</html>
