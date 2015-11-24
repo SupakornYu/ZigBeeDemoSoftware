@@ -16,7 +16,7 @@ links = []
 routerList = [{'NWK id':0}]
 hisRouterList = []
 
-nodesQueryMore = []
+flagExecuteProcessTopology = False
 MQTTclient = mqtt.Client()
 
 #config Serial port
@@ -99,9 +99,10 @@ def deleteDictionaryFromList(temp,key,id):
 
 def processTopology():
     routerList = [{'NWK id':0}]
-    nodes = []
+    nodes = [{'NWK id': '0', 'LQI': '0', 'deviceType': '0'}]
     links = []
     hisRouterList = []
+    flagExecuteProcessTopology = True
     print 'inside'
     while len(routerList)>0:
         print 'inside len while'
@@ -121,28 +122,35 @@ def processTopology():
                 #will add each node to list
 
                 for i in range(2,len(temp)):
-                    tempNode = {}
-                    tempNode = {'NWK id':temp[i].split(',')[0].split(':')[1].split()[0],'LQI':temp[i].split(',')[1].split(':')[1].split()[0],'deviceType':temp[i].split(',')[3].split(':')[1].split()[0]}
-                    tempLink = {}
-                    tempLink = {'from':temp[1].split(',')[0].split(':')[1].split()[0],'to':temp[i].split(',')[0].split(':')[1].split()[0]}
-                    nodes.append(tempNode)
-                    links.append(tempLink)
-                    if(int(temp[i].split(',')[3].split(':')[1].split()[0])==1):
-                        if int(temp[i].split(',')[0].split(':')[1].split()[0]) not in hisRouterList:
-                            print {'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])}
-                            routerList.append({'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])})
-                    #type query recursive
-                    #0 for query more index
-                    #1 for query more when router
-                    #{'type':0,'NWK addr':22,index:0,numindex:4}
-                    #{'type':1,'NWK addr':22}
+
+                    #filter sometime they will return coordinator address.
+                    if temp[i].split(',')[0].split(':')[1].split()[0] != '0':
+                        tempNode = {}
+                        tempNode = {'NWK id':temp[i].split(',')[0].split(':')[1].split()[0],'LQI':temp[i].split(',')[1].split(':')[1].split()[0],'deviceType':temp[i].split(',')[3].split(':')[1].split()[0]}
+                        tempLink = {}
+                        tempLink = {'from':temp[1].split(',')[0].split(':')[1].split()[0],'to':temp[i].split(',')[0].split(':')[1].split()[0]}
+                        nodes.append(tempNode)
+                        links.append(tempLink)
+                        if(int(temp[i].split(',')[3].split(':')[1].split()[0])==1):
+                            if int(temp[i].split(',')[0].split(':')[1].split()[0]) not in hisRouterList:
+                                print {'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])}
+                                routerList.append({'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])})
+                        #type query recursive
+                        #0 for query more index
+                        #1 for query more when router
+                        #{'type':0,'NWK addr':22,index:0,numindex:4}
+                        #{'type':1,'NWK addr':22}
+
+                #under here for retriving if table have more than 2 list
+                #by push command to queue with incresing index parameter
+                #command to serial thread will get and execute its queue
                 #spec on ZigBee retrive each round with 2 tuple
                 if int(temp[1].split(',')[4].split(':')[1].split()[0]) > nodeIndex:
                     print 'node index '+str(nodeIndex)
                     nodeIndex+=2
                     addCommandToWriteSerialQueue('getTable '+str(routerNodeTemp['NWK id'])+' '+str(nodeIndex))
                 else:
-                    print 'else set flag'+str(nodeIndex)
+                    print 'else set flag '+str(nodeIndex)
                     flagKeepIndex = False
             else:
                 flagKeepIndex = False
@@ -152,12 +160,14 @@ def processTopology():
 
     dataSend = {'nodes':nodes,'links':links}
     addDataToMQTTServerQueue(json.dumps(dataSend))
+    flagExecuteProcessTopology = False
 
 
 def callGenTopologyEvery():
     while True:
         #have to push queue because we will recursive call processTopology
-        processTopology()
+        if not(flagExecuteProcessTopology):
+            processTopology()
         time.sleep(10)
 
 
