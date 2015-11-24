@@ -81,7 +81,8 @@ $(document).ready(function(){
         message.destinationName = "/ZigBeeAtmel/toCi";
         message.retained = true;
         client.send(message);
-    }
+        topologyDiv.clearAllData();
+    };
 
     // called when the client loses its connection
     function onConnectionLost(responseObject) {
@@ -90,20 +91,16 @@ $(document).ready(function(){
         if (responseObject.errorCode !== 0) {
             console.log("onConnectionLost:"+responseObject.errorMessage);
         }
-    }
+    };
 
     // called when a message arrives
     function onMessageArrived(message) {
-        topologyDiv.clearAllData();
         console.log("onMessageArrived:"+message.payloadString);
         tttt = JSON.parse(message.payloadString);
         console.log(tttt);
-        topologyDiv.addNode([{"NWK id": "0", "LQI": "0", "deviceType": "0"}]);
-        topologyDiv.addNode(tttt['nodes']);
-        topologyDiv.addEdge(tttt['links']);
-
-
-    }
+        //topologyDiv.addNode([{"NWK id": "0", "LQI": "0", "deviceType": "0"}]);
+        topologyDiv.updateTopology(tttt['nodes'],tttt['links']);
+    };
 
     function sendMessageToCi(message){
         client.send(message);
