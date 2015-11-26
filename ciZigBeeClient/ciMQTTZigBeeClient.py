@@ -22,7 +22,7 @@ MQTTclient = mqtt.Client()
 #config Serial port
 def initSerial():
     sp = serial.Serial()
-    sp.port = 'COM8'
+    sp.port = 'COM3'
     sp.baudrate = 38400
     sp.parity = serial.PARITY_NONE
     sp.bytesize = serial.EIGHTBITS
@@ -124,7 +124,7 @@ def processTopology():
                 for i in range(2,len(temp)):
 
                     #filter sometime they will return coordinator address.
-                    if temp[i].split(',')[0].split(':')[1].split()[0] != '0':
+                    if not(int(temp[i].split(',')[0].split(':')[1].split()[0]) == 0 or (int(temp[i].split(',')[0].split(':')[1].split()[0]) in hisRouterList) or ({'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])} in routerList)):
                         tempNode = {}
                         tempNode = {'NWK id':temp[i].split(',')[0].split(':')[1].split()[0],'LQI':temp[i].split(',')[1].split(':')[1].split()[0],'deviceType':temp[i].split(',')[3].split(':')[1].split()[0]}
                         tempLink = {}
@@ -135,6 +135,8 @@ def processTopology():
                             if int(temp[i].split(',')[0].split(':')[1].split()[0]) not in hisRouterList:
                                 print {'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])}
                                 routerList.append({'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])})
+                    print 'router List'
+                    print routerList
                         #type query recursive
                         #0 for query more index
                         #1 for query more when router
