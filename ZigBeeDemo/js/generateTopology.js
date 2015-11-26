@@ -36,12 +36,21 @@ function TopologyGen(nodes,edges){
             },
             source: {
                 color: {border: 'white'}
+            },
+            ZigBeeCoordinator: {
+                color: 'red'
+            },
+            ZigBeeRouter: {
+                color: 'orange'
+            },
+            ZigBeeEndDevice: {
+                color: 'green'
             }
         }
     };
     var network = new vis.Network(container, data, options);
 
-};
+}
 
 TopologyGen.prototype.updateTopology = function updateTopology(objNodeDetailArr,objEdgeDetailArr){
     var tempNode = this.nodes.get();
@@ -82,13 +91,22 @@ TopologyGen.prototype.addNodeNotDuplicate = function addNodeNotDuplicate(objNode
 
     for(var i=0;i<objNodeDetailArr.length;i++){
         //check duplicate add
+        var groupTemp;
+        if(objNodeDetailArr[i]['deviceType']==="0"){
+            groupTemp = 'ZigBeeCoordinator';
+        }else if(objNodeDetailArr[i]['deviceType']==="1"){
+            groupTemp = 'ZigBeeRouter';
+        }else if(objNodeDetailArr[i]['deviceType']==="2"){
+            groupTemp = 'ZigBeeEndDevice';
+        }
+
         if(this.nodes.get(objNodeDetailArr[i]['NWK id'])===null) {
             try {
                 this.nodes.add({
                     id: objNodeDetailArr[i]['NWK id'],
-                    label: objNodeDetailArr[i]['NWK id']
+                    label: objNodeDetailArr[i]['NWK id'],
                     //label: objNodeDetailArr[i].label
-                    //group: objNodeDetailArr[i].group
+                    group: groupTemp
                 });
             }
             catch (err) {
@@ -161,7 +179,7 @@ TopologyGen.prototype.addEdgeNotDuplicate = function addEdgeNotDuplicate(objEdge
 
         var countList = this.edges.get({
             filter: function (item) {
-                return item.from === objEdgeDetailArr[i].from && item.to === objEdgeDetailArr[i].to;
+                return (item.from === objEdgeDetailArr[i].from && item.to === objEdgeDetailArr[i].to) || (item.to === objEdgeDetailArr[i].from && item.from === objEdgeDetailArr[i].to);
             }
         }).length;
 
