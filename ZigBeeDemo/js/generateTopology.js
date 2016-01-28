@@ -55,8 +55,11 @@ function TopologyGen(nodes,edges){
 TopologyGen.prototype.updateTopology = function updateTopology(objNodeDetailArr,objEdgeDetailArr){
     var tempNode = this.nodes.get();
     var tempEdge = this.edges.get();
+    //1.add all new node and link but not duplicated.
     this.addNodeNotDuplicate(objNodeDetailArr);
     this.addEdgeNotDuplicate(objEdgeDetailArr);
+
+    //2.search for node and link that does not exist in data anymore.
     for(var i=0;i<objNodeDetailArr.length;i++){
         if(this.nodes.get(objNodeDetailArr[i]['NWK id'])!==null){
             tempNode = tempNode
@@ -79,7 +82,7 @@ TopologyGen.prototype.updateTopology = function updateTopology(objNodeDetailArr,
         }
     }
 
-
+    //3.remove not existing node and link from topology.
     this.removeNode(tempNode);
     this.removeEdge(tempEdge);
 
