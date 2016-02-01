@@ -4,6 +4,8 @@ import json
 import time
 import Queue
 import paho.mqtt.client as mqtt
+import sys
+from CoreSystem.GlobalNetworkIdSystem import GlobalNetworkIdManagement
 
 #for store string before send to mqtt
 toMQTTServer_Queue = Queue.Queue()
@@ -18,6 +20,7 @@ hisRouterList = []
 
 flagExecuteProcessTopology = False
 MQTTclient = mqtt.Client()
+GlobalNetworkIdManagement_instance = GlobalNetworkIdManagement.GlobalNetworkIdManagement()
 
 #config Serial port
 def initSerial():
@@ -162,6 +165,10 @@ def processTopology():
 
     dataSend = {'nodes':nodes,'links':links}
     addDataToMQTTServerQueue(json.dumps(dataSend))
+    #register zigbee device to global network id
+    for row in dataSend['nodes']:
+        GlobalNetworkIdManagement_instance.registerNewDevice(1,row['NWK id'])
+    GlobalNetworkIdManagement_instance.updateGlobalTableToMqtt()
     flagExecuteProcessTopology = False
 
 
