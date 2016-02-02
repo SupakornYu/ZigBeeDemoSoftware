@@ -6,6 +6,7 @@ import Queue
 import paho.mqtt.client as mqtt
 import sys
 from CoreSystem.GlobalNetworkIdSystem import GlobalNetworkIdManagement
+from CoreSystem.ESP8266Core import ESP8266Management
 
 #for store string before send to mqtt
 toMQTTServer_Queue = Queue.Queue()
@@ -20,7 +21,9 @@ hisRouterList = []
 
 flagExecuteProcessTopology = False
 MQTTclient = mqtt.Client()
+
 GlobalNetworkIdManagement_instance = GlobalNetworkIdManagement.GlobalNetworkIdManagement()
+ESP8266Management_instance = ESP8266Management.ESP8266Management(GlobalNetworkIdManagement_instance)
 
 #config Serial port
 def initSerial():
@@ -169,6 +172,7 @@ def processTopology():
     for row in dataSend['nodes']:
         GlobalNetworkIdManagement_instance.registerNewDevice(1,row['NWK id'])
     GlobalNetworkIdManagement_instance.updateGlobalTableToMqtt()
+    #class Query Desc startQuery method here and it will get global table and send address to serialport queue
     flagExecuteProcessTopology = False
 
 
