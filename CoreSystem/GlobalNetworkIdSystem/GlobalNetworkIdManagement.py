@@ -2,8 +2,6 @@ import logging
 import threading
 import time
 import paho.mqtt.client as mqtt
-import sys
-import os
 #sys.path.append('../MqttManagement')
 #print os.path.abspath(os.path.dirname(__file__) + '/' + '../..')
 #sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
@@ -19,13 +17,16 @@ class GlobalNetworkIdManagement(object):
     #globalTable [globalId,deviceTechType,localNetworkId]
     def __init__(self,start=1):
 
-        self.pathMqtt = MqttManagement.GLOBAL_ID_TOPIC_SEND
+        self.pathMqttGlobalTable = MqttManagement.GLOBAL_ID_TOPIC_SEND
+        self.pathMqttNodeDescTable = MqttManagement.GLOBAL_DESC_NODE_SEND
         self.MQTTclient = mqtt.Client()
         self.startMQTTserver()
 
         self.lock = threading.Lock()
         self.globalId = start
         self.globalTable = []
+        self.nodeDescTable = []
+        logging.debug('GlobalNetworkIdManagement init')
 
     def on_connect(self,client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
@@ -45,29 +46,49 @@ class GlobalNetworkIdManagement(object):
 
 
     def updateGlobalTableToMqtt(self):
-        self.MQTTclient.publish(self.pathMqtt,json.dumps(self.globalTable),0,True)
+        self.MQTTclient.publish(self.pathMqttGlobalTable,json.dumps(self.globalTable),0,True)
+
+    def updateNodeDescTable(self):
+        self.MQTTclient.publish(self.pathMqttNodeDescTable,json.dumps(self.nodeDescTable),0,True)
 
     #deviceTechType zigbeeHA=1,ESP8266=2
     def registerNewDevice(self,deviceTechType,localNetworkId):
-        logging.debug('Waiting for lock')
+        #logging.debug('Waiting for lock')
         self.lock.acquire()
         try:
-            logging.debug('Acquired lock')
+            #logging.debug('Acquired lock')
             if [d for d in self.globalTable if d[1] ==deviceTechType and d[2] ==localNetworkId] == []:
                 tempRow = []
                 tempRow = [self.globalId,deviceTechType,localNetworkId]
                 self.globalTable.append(tempRow)
                 self.globalId = self.globalId + 1
-            else:
-                logging.debug('Already contained')
+            #else:
+                #logging.debug('Already contained')
         finally:
             self.lock.release()
 
     def getGlobalTable(self):
         return  self.globalTable
 
-    def getGlobalIdDetail(self,globalId):
+    def getRealIdByGlobalId(self,globalId):
         return [d for d in self.globalTable if d[0] == globalId]
+
+    def getGlobalId(self,deviceTechType,localNetworkId):
+        return [d for d in self.globalTable if d[1] == deviceTechType and d[2] == localNetworkId]
+
+    def addDescDevice(self,GBID,EP,APID,ADID,ClusterIn,ClusterOut):
+        #check duplicate if true record should be updated
+        if [d for d in self.nodeDescTable if d['GBID']==GBID ] == []:
+            self.nodeDescTable.append({'GBID':GBID,'EP':EP,'APID':APID,'ADID':ADID,'ClusterIn':ClusterIn,'ClusterOut':ClusterOut})
+            logging.debug('Add DESC success')
+        else:
+            #update record not add a new one
+            self.nodeDescTable = [d for d in fff if d['GBID'] != GBID]
+            self.nodeDescTable.append({'GBID':GBID,'EP':EP,'APID':APID,'ADID':ADID,'ClusterIn':ClusterIn,'ClusterOut':ClusterOut})
+            logging.debug('Already contained')
+
+    def delDescDevice(self,GBID):
+        self.nodeDescTable = [d for d in self.nodeDescTable if d['GBID'] != GBID]
 
     #deviceTechType all=0,zigbeeHA=1,ESP8266=2
     def cleanGlobalTable(self,deviceTechType):
@@ -77,6 +98,9 @@ class GlobalNetworkIdManagement(object):
             self.globalTable = [d for d in self.globalTable if d[1] !=1]
         elif deviceTechType == 2:
             self.globalTable = [d for d in self.globalTable if d[1] !=2]
+
+    def cleanNodeDescTable(self):
+        self.nodeDescTable = []
 
     #def deleteGlobalId(self,option,):
 

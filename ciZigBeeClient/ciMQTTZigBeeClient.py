@@ -7,11 +7,12 @@ import paho.mqtt.client as mqtt
 import sys
 from CoreSystem.GlobalNetworkIdSystem import GlobalNetworkIdManagement
 from CoreSystem.ESP8266Core import ESP8266Management
+from CoreSystem.ZigBeeCore import ZigBeeDESC
 
 #for store string before send to mqtt
 toMQTTServer_Queue = Queue.Queue()
 
-serialProcess_Queue = Queue.Queue()
+stringFromSerial_Queue = Queue.Queue()
 toCombine_ViaSerial_Queue = Queue.Queue()
 processTopology_Queue = Queue.Queue()
 nodes = []
@@ -24,6 +25,7 @@ MQTTclient = mqtt.Client()
 
 GlobalNetworkIdManagement_instance = GlobalNetworkIdManagement.GlobalNetworkIdManagement()
 ESP8266Management_instance = ESP8266Management.ESP8266Management(GlobalNetworkIdManagement_instance)
+ZigBeeDESC_instance = ZigBeeDESC.ZigBeeDESC(GlobalNetworkIdManagement_instance,toCombine_ViaSerial_Queue)
 
 #config Serial port
 def initSerial():
@@ -54,7 +56,7 @@ def readInputSerial(ser):
                 _temp+=i
                 if i=='\n':
                     _cmdList.append(_temp)
-                    serialProcess_Queue.put(_temp)
+                    stringFromSerial_Queue.put(_temp)
                     _temp = ''
             for i in _cmdList:
                 print i
@@ -168,9 +170,18 @@ def processTopology():
 
     dataSend = {'nodes':nodes,'links':links}
     addDataToMQTTServerQueue(json.dumps(dataSend))
+
+
+    #clean nodeDESCTable
+    GlobalNetworkIdManagement_instance.cleanNodeDescTable()
+
+    #clean reportRoutineTable for preventing no device response
+
     #register zigbee device to global network id
     for row in dataSend['nodes']:
         GlobalNetworkIdManagement_instance.registerNewDevice(1,row['NWK id'])
+        #add nkw_id to queryActiveEndpoint
+        ZigBeeDESC_instance.queryActiveEndpoints(row['NWK id'])
     GlobalNetworkIdManagement_instance.updateGlobalTableToMqtt()
     #class Query Desc startQuery method here and it will get global table and send address to serialport queue
     flagExecuteProcessTopology = False
@@ -189,10 +200,15 @@ def processCommandFromSerial():
     while True:
         commandString = ''
         temp = ''
-        temp = serialProcess_Queue.get();
+        temp = stringFromSerial_Queue.get();
         #print "CQ : "+str(temp)
-        if temp.count('|')>0:
+        #if temp.count('|')>0:
+        if temp.split()[0] == '<|TableOfAddr' or temp.split()[0] == '<|TableOfAddrBad':
             processTopology_Queue.put(temp)
+        elif temp.split()[0] == '<|ActiveEndPoints' or temp.split()[0] == '<|ActiveEndPointUnSuccess':
+            ZigBeeDESC_instance.queryActiveEndpoints_queue.put(temp)
+        elif temp.split()[0] == '<|QueryCluster' or temp.split()[0] == '<|simpleDescRespUnSuccess':
+            ZigBeeDESC_instance.queryCluster_queue.put(temp)
 
             #     temp = temp[1].split()
             #     addr = temp[2]
