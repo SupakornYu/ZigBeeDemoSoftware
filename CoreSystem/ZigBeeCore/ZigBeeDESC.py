@@ -8,10 +8,18 @@ class ZigBeeDESC(object):
 
     def __init__(self,globalnetworkid_instance,toSerial_Queue):
 
+        self.queryCompleteFlag = True
+        self.queryActiveEndpoints_Condition = threading.Condition()
+        #self.queryNodeDESC_Condition = threading.Condition()
+        self.storeNetworkAddressList_queue = Queue.Queue()
         self.queryActiveEndpoints_queue = Queue.Queue()
         self.queryCluster_queue = Queue.Queue()
+
         self.globalnetworkid_instance = globalnetworkid_instance
         self.toSerial_Queue_instance = toSerial_Queue
+
+        self.processTaskQueryNodeDESC_thread = threading.Thread(target=self.processTaskQueryNodeDESC)
+        self.processTaskQueryNodeDESC_thread.start()
 
         self.processActiveEndpoints_thread = threading.Thread(target=self.processActiveEndpoints)
         self.processActiveEndpoints_thread.start()
@@ -21,8 +29,24 @@ class ZigBeeDESC(object):
 
         logging.debug('ZigBee DESC init')
 
+
+    def putNetworkAddressListToQueue(self,networkAddressList):
+        self.storeNetworkAddressList_queue.put(networkAddressList)
+
+    def processTaskQueryNodeDESC(self):
+        while True:
+            tempList = self.storeNetworkAddressList_queue.get()
+            self.queryActiveEndpoints_Condition.acquire()
+            self.globalnetworkid_instance.cleanNodeDescTable()
+            for tempEach in tempList:
+                self.queryActiveEndpoints(tempEach['NWK id'])
+                self.queryActiveEndpoints_Condition.wait()
+            self.globalnetworkid_instance.updateNodeDescTable()
+            self.queryActiveEndpoints_Condition.release()
+
     def queryActiveEndpoints(self,networkAddress):
         self.putCMDToSerialQueue("getActiveEndpoints "+str(networkAddress))
+        print networkAddress
 
     def queryClusters(self,networkAddress,ep):
         self.putCMDToSerialQueue("getSimpleDesc "+str(networkAddress)+" "+str(ep))
@@ -32,16 +56,22 @@ class ZigBeeDESC(object):
         while True:
             temp = ''
             temp = self.queryActiveEndpoints_queue.get()
+            self.queryActiveEndpoints_Condition.acquire()
             print "in processActiveEndpoints"
             if temp.split()[0] == '<|ActiveEndPoints':
                 nwk_temp = temp.split(',')[1]
                 for dd in temp.split('<|')[2].split('|'):
                     self.queryClusters(nwk_temp,dd)
+            else:
+                #this case handle unsuccessful query
+                self.queryActiveEndpoints_Condition.notify()
+            self.queryActiveEndpoints_Condition.release()
 
     def processClusters(self):
         while True:
             temp = ''
             temp = self.queryCluster_queue.get().rstrip()
+            self.queryActiveEndpoints_Condition.acquire()
             print "in processClusters"
             if temp.split()[0] == '<|QueryCluster':
                 nwk_temp = temp.split(',')[1]
@@ -60,8 +90,13 @@ class ZigBeeDESC(object):
 
                 self.globalnetworkid_instance.addDescDevice(GBID_temp,ep_temp,APID_temp,ADID_temp,inCluster_temp,outCluster_temp)
 
-                self.globalnetworkid_instance.updateNodeDescTable()
+
                 #send task to report Routine here
+                self.queryActiveEndpoints_Condition.notify()
+            else:
+                #this case handle unsuccessful query
+                self.queryActiveEndpoints_Condition.notify()
+            self.queryActiveEndpoints_Condition.release()
 
     def putCMDToSerialQueue(self,cmd):
         cmd = cmd+"\r\n"

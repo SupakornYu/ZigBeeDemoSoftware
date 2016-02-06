@@ -173,7 +173,7 @@ def processTopology():
 
 
     #clean nodeDESCTable
-    GlobalNetworkIdManagement_instance.cleanNodeDescTable()
+
 
     #clean reportRoutineTable for preventing no device response
 
@@ -181,8 +181,11 @@ def processTopology():
     for row in dataSend['nodes']:
         GlobalNetworkIdManagement_instance.registerNewDevice(1,row['NWK id'])
         #add nkw_id to queryActiveEndpoint
-        ZigBeeDESC_instance.queryActiveEndpoints(row['NWK id'])
+
+        #add node count to query for counting and send mqtt unsuccess -1
+
     GlobalNetworkIdManagement_instance.updateGlobalTableToMqtt()
+    ZigBeeDESC_instance.putNetworkAddressListToQueue(dataSend['nodes'])
     #class Query Desc startQuery method here and it will get global table and send address to serialport queue
     flagExecuteProcessTopology = False
 

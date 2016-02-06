@@ -83,7 +83,7 @@ class GlobalNetworkIdManagement(object):
             logging.debug('Add DESC success')
         else:
             #update record not add a new one
-            self.nodeDescTable = [d for d in fff if d['GBID'] != GBID]
+            self.nodeDescTable = [d for d in self.nodeDescTable if d['GBID'] != GBID]
             self.nodeDescTable.append({'GBID':GBID,'EP':EP,'APID':APID,'ADID':ADID,'ClusterIn':ClusterIn,'ClusterOut':ClusterOut})
             logging.debug('Already contained')
 
