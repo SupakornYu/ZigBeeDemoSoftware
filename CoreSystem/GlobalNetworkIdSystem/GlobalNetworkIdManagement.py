@@ -78,12 +78,12 @@ class GlobalNetworkIdManagement(object):
 
     def addDescDevice(self,GBID,EP,APID,ADID,ClusterIn,ClusterOut):
         #check duplicate if true record should be updated
-        if [d for d in self.nodeDescTable if d['GBID']==GBID ] == []:
+        if [d for d in self.nodeDescTable if d['GBID']==GBID and d['EP']==EP] == []:
             self.nodeDescTable.append({'GBID':GBID,'EP':EP,'APID':APID,'ADID':ADID,'ClusterIn':ClusterIn,'ClusterOut':ClusterOut})
             logging.debug('Add DESC success')
         else:
             #update record not add a new one
-            self.nodeDescTable = [d for d in self.nodeDescTable if d['GBID'] != GBID]
+            self.nodeDescTable = [d for d in self.nodeDescTable if not(d['GBID']==GBID and d['EP']==EP)]
             self.nodeDescTable.append({'GBID':GBID,'EP':EP,'APID':APID,'ADID':ADID,'ClusterIn':ClusterIn,'ClusterOut':ClusterOut})
             logging.debug('Already contained')
 
@@ -98,6 +98,9 @@ class GlobalNetworkIdManagement(object):
             self.globalTable = [d for d in self.globalTable if d[1] !=1]
         elif deviceTechType == 2:
             self.globalTable = [d for d in self.globalTable if d[1] !=2]
+
+    def getNodeDESCTable(self):
+        return self.nodeDescTable
 
     def cleanNodeDescTable(self):
         self.nodeDescTable = []

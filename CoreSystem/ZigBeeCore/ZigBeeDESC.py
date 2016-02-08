@@ -10,7 +10,7 @@ class ZigBeeDESC(object):
 
         self.queryCompleteFlag = True
         self.queryActiveEndpoints_Condition = threading.Condition()
-        #self.queryNodeDESC_Condition = threading.Condition()
+        self.queryNodeDESC_Condition = threading.Condition()
         self.storeNetworkAddressList_queue = Queue.Queue()
         self.queryActiveEndpoints_queue = Queue.Queue()
         self.queryCluster_queue = Queue.Queue()
@@ -57,21 +57,25 @@ class ZigBeeDESC(object):
             temp = ''
             temp = self.queryActiveEndpoints_queue.get()
             self.queryActiveEndpoints_Condition.acquire()
+            self.queryNodeDESC_Condition.acquire()
             print "in processActiveEndpoints"
             if temp.split()[0] == '<|ActiveEndPoints':
                 nwk_temp = temp.split(',')[1]
                 for dd in temp.split('<|')[2].split('|'):
                     self.queryClusters(nwk_temp,dd)
+                    self.queryNodeDESC_Condition.wait()
+                self.queryActiveEndpoints_Condition.notify()
             else:
                 #this case handle unsuccessful query
                 self.queryActiveEndpoints_Condition.notify()
+            self.queryNodeDESC_Condition.release()
             self.queryActiveEndpoints_Condition.release()
 
     def processClusters(self):
         while True:
             temp = ''
             temp = self.queryCluster_queue.get().rstrip()
-            self.queryActiveEndpoints_Condition.acquire()
+            self.queryNodeDESC_Condition.acquire()
             print "in processClusters"
             if temp.split()[0] == '<|QueryCluster':
                 nwk_temp = temp.split(',')[1]
@@ -92,11 +96,11 @@ class ZigBeeDESC(object):
 
 
                 #send task to report Routine here
-                self.queryActiveEndpoints_Condition.notify()
+                self.queryNodeDESC_Condition.notify()
             else:
                 #this case handle unsuccessful query
-                self.queryActiveEndpoints_Condition.notify()
-            self.queryActiveEndpoints_Condition.release()
+                self.queryNodeDESC_Condition.notify()
+            self.queryNodeDESC_Condition.release()
 
     def putCMDToSerialQueue(self,cmd):
         cmd = cmd+"\r\n"

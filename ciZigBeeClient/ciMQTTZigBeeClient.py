@@ -8,6 +8,7 @@ import sys
 from CoreSystem.GlobalNetworkIdSystem import GlobalNetworkIdManagement
 from CoreSystem.ESP8266Core import ESP8266Management
 from CoreSystem.ZigBeeCore import ZigBeeDESC
+from CoreSystem.reportValueSystem import reportValue
 
 #for store string before send to mqtt
 toMQTTServer_Queue = Queue.Queue()
@@ -26,6 +27,7 @@ MQTTclient = mqtt.Client()
 GlobalNetworkIdManagement_instance = GlobalNetworkIdManagement.GlobalNetworkIdManagement()
 ESP8266Management_instance = ESP8266Management.ESP8266Management(GlobalNetworkIdManagement_instance)
 ZigBeeDESC_instance = ZigBeeDESC.ZigBeeDESC(GlobalNetworkIdManagement_instance,toCombine_ViaSerial_Queue)
+reportValue_instance = reportValue.reportValue(GlobalNetworkIdManagement_instance,toCombine_ViaSerial_Queue)
 
 #config Serial port
 def initSerial():
@@ -212,6 +214,8 @@ def processCommandFromSerial():
             ZigBeeDESC_instance.queryActiveEndpoints_queue.put(temp)
         elif temp.split()[0] == '<|QueryCluster' or temp.split()[0] == '<|simpleDescRespUnSuccess':
             ZigBeeDESC_instance.queryCluster_queue.put(temp)
+        elif temp.split()[0] == '<-ReadTemperature':
+            reportValue_instance.addStringToZigBeeReportQueue(temp)
 
             #     temp = temp[1].split()
             #     addr = temp[2]
