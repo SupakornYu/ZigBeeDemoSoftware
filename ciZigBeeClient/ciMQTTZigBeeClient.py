@@ -22,11 +22,12 @@ routerList = [{'NWK id':0}]
 hisRouterList = []
 
 flagExecuteProcessTopology = False
+queryTopology_condition = threading.Condition()
 MQTTclient = mqtt.Client()
 
 GlobalNetworkIdManagement_instance = GlobalNetworkIdManagement.GlobalNetworkIdManagement()
 ESP8266Management_instance = ESP8266Management.ESP8266Management(GlobalNetworkIdManagement_instance)
-ZigBeeDESC_instance = ZigBeeDESC.ZigBeeDESC(GlobalNetworkIdManagement_instance,toCombine_ViaSerial_Queue)
+ZigBeeDESC_instance = ZigBeeDESC.ZigBeeDESC(GlobalNetworkIdManagement_instance,toCombine_ViaSerial_Queue,queryTopology_condition)
 reportValue_instance = reportValue.reportValue(GlobalNetworkIdManagement_instance,toCombine_ViaSerial_Queue)
 
 #config Serial port
@@ -189,7 +190,11 @@ def processTopology():
     GlobalNetworkIdManagement_instance.updateGlobalTableToMqtt()
     ZigBeeDESC_instance.putNetworkAddressListToQueue(dataSend['nodes'])
     #class Query Desc startQuery method here and it will get global table and send address to serialport queue
+
+    queryTopology_condition.acquire()
+    queryTopology_condition.wait()
     flagExecuteProcessTopology = False
+    queryTopology_condition.release()
 
 
 def callGenTopologyEvery():
@@ -206,6 +211,7 @@ def processCommandFromSerial():
         commandString = ''
         temp = ''
         temp = stringFromSerial_Queue.get();
+        print "String From Serial : "+str(temp)
         #print "CQ : "+str(temp)
         #if temp.count('|')>0:
         if temp.split()[0] == '<|TableOfAddr' or temp.split()[0] == '<|TableOfAddrBad':
@@ -215,6 +221,8 @@ def processCommandFromSerial():
         elif temp.split()[0] == '<|QueryCluster' or temp.split()[0] == '<|simpleDescRespUnSuccess':
             ZigBeeDESC_instance.queryCluster_queue.put(temp)
         elif temp.split()[0] == '<-ReadTemperature':
+            reportValue_instance.addStringToZigBeeReportQueue(temp)
+        elif temp.split()[0]+temp.split()[1] == '<-ReadIasZone':
             reportValue_instance.addStringToZigBeeReportQueue(temp)
 
             #     temp = temp[1].split()

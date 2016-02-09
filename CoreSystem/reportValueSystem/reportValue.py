@@ -16,8 +16,10 @@ class reportValue(object):
         self.MQTTclient = mqtt.Client()
         self.startMQTTserver()
 
+        self.report_condition = threading.Condition()
 
-        self.repeatTime = 10 #seconds
+
+        #self.repeatTime = 10 #seconds
 
         self.reportDataTable = []
 
@@ -53,13 +55,19 @@ class reportValue(object):
     def taskZigBeeReportRunner(self):
         while True:
             temp_table = self.globalnetworkid_instance.getNodeDESCTable()
-            for i in temp_table:
-                for j in i['ClusterIn']:
-                    if j == '1026':
-                        self.readAttributeZigBee(i['GBID'][2],i['EP'],j,0)
-                    elif j == '1280':
-                        self.readAttributeZigBee(i['GBID'][2],i['EP'],j,2)
-            time.sleep(self.repeatTime)
+            print "taskZigBeeReportRunner "+str(temp_table)
+            if temp_table!=[]:
+                self.report_condition.acquire()
+                for i in temp_table:
+                    for j in i['ClusterIn']:
+                        if j == '1026':
+                            self.readAttributeZigBee(i['GBID'][2],i['EP'],j,0)
+                            self.report_condition.wait()
+                        if j == '1280':
+                            self.readAttributeZigBee(i['GBID'][2],i['EP'],j,2)
+                            self.report_condition.wait()
+                self.report_condition.release()
+            time.sleep(3)
 
     def cleandataReportTable(self):
         self.reportDataTable = []
@@ -88,6 +96,7 @@ class reportValue(object):
         while True:
             temp = ''
             temp = self.attributeValueProcess_queue.get()
+            self.report_condition.acquire()
             print 'debug : '+str(temp)
             print "in processZigBeeReport"
             if temp.split()[0] == '<-ReadTemperature' and temp.split('<-')[2].split(',')[0] !='failed':
@@ -98,7 +107,8 @@ class reportValue(object):
             #elif
             print self.reportDataTable
             self.updateReportTableToMQTT()
-
+            self.report_condition.notify()
+            self.report_condition.release()
 
     def putCMDToSerialQueue(self,cmd):
         cmd = cmd+"\r\n"

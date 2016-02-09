@@ -6,9 +6,9 @@ import Queue
 
 class ZigBeeDESC(object):
 
-    def __init__(self,globalnetworkid_instance,toSerial_Queue):
+    def __init__(self,globalnetworkid_instance,toSerial_Queue,queryTopology_condition):
 
-        self.queryCompleteFlag = True
+        self.queryTopology_condition = queryTopology_condition
         self.queryActiveEndpoints_Condition = threading.Condition()
         self.queryNodeDESC_Condition = threading.Condition()
         self.storeNetworkAddressList_queue = Queue.Queue()
@@ -43,6 +43,10 @@ class ZigBeeDESC(object):
                 self.queryActiveEndpoints_Condition.wait()
             self.globalnetworkid_instance.updateNodeDescTable()
             self.queryActiveEndpoints_Condition.release()
+
+            self.queryTopology_condition.acquire()
+            self.queryTopology_condition.notify()
+            self.queryTopology_condition.release()
 
     def queryActiveEndpoints(self,networkAddress):
         self.putCMDToSerialQueue("getActiveEndpoints "+str(networkAddress))
