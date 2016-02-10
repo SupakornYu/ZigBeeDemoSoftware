@@ -5,11 +5,12 @@ import Queue
 import paho.mqtt.client as mqtt
 from CoreSystem.MqttManagement import MqttManagement
 import json
+from datetime import datetime
 
 
 class reportValue(object):
 
-    def __init__(self,globalnetworkid_instance,toSerial_Queue):
+    def __init__(self,globalnetworkid_instance,toSerial_Queue,):
 
         self.pathMqttReport = MqttManagement.CORE_REPORT_VALUE_TO_MQTT
         self.pathMqttGetReportESP8266 = MqttManagement.ESP8266_REPORT_FROM_NODE_TO_CORE_GET
@@ -55,17 +56,17 @@ class reportValue(object):
     def taskZigBeeReportRunner(self):
         while True:
             temp_table = self.globalnetworkid_instance.getNodeDESCTable()
-            print "taskZigBeeReportRunner "+str(temp_table)
+            #print "taskZigBeeReportRunner "+str(temp_table)
             if temp_table!=[]:
                 self.report_condition.acquire()
                 for i in temp_table:
                     for j in i['ClusterIn']:
                         if j == '1026':
                             self.readAttributeZigBee(i['GBID'][2],i['EP'],j,0)
-                            self.report_condition.wait()
+                            self.report_condition.wait(10)
                         if j == '1280':
                             self.readAttributeZigBee(i['GBID'][2],i['EP'],j,2)
-                            self.report_condition.wait()
+                            self.report_condition.wait(10)
                 self.report_condition.release()
             time.sleep(3)
 
@@ -73,17 +74,17 @@ class reportValue(object):
         self.reportDataTable = []
 
     def addReportDataTable(self,GBID,ValueType,Value):
-        if [dd for dd in self.reportDataTable if dd['GBID'] == GBID] == []:
-            self.reportDataTable.append({"GBID":GBID,str(ValueType):str(Value)})
+        if [dd for dd in self.reportDataTable if dd['GBID'] == GBID and dd.keys()[1] == ValueType] == []:
+            self.reportDataTable.append({"GBID":GBID,str(ValueType):str(Value),"time":str(datetime.now())})
         else:
-            self.reportDataTable = [dd for dd in self.reportDataTable if dd['GBID'] != GBID]
-            self.reportDataTable.append({"GBID":GBID,str(ValueType):str(Value)})
+            self.reportDataTable = [dd for dd in self.reportDataTable if not(dd['GBID'] == GBID and dd.keys()[1] == ValueType)]
+            self.reportDataTable.append({"GBID":GBID,str(ValueType):str(Value),"time":str(datetime.now())})
 
     def readAttributeZigBee(self,networkAddress,EP,clusterID,attributeID):
         cmd_temp = "readAttribute 0x02 "+str(networkAddress)+" "+str(EP)+" "+str(clusterID)+" "+str(attributeID)
         print cmd_temp
         self.putCMDToSerialQueue(cmd_temp)
-        print networkAddress
+        #print networkAddress
 
     def addStringToZigBeeReportQueue(self,valueString):
         self.attributeValueProcess_queue.put(valueString)
@@ -96,19 +97,28 @@ class reportValue(object):
         while True:
             temp = ''
             temp = self.attributeValueProcess_queue.get()
-            self.report_condition.acquire()
-            print 'debug : '+str(temp)
-            print "in processZigBeeReport"
-            if temp.split()[0] == '<-ReadTemperature' and temp.split('<-')[2].split(',')[0] !='failed':
-                nwk_temp = temp.split('<-')[2].split(',')[1].rstrip()
-                temperature_temp = temp.split('<-')[2].split(',')[0]
-                GBID_temp = self.globalnetworkid_instance.getGlobalId(1,str(nwk_temp))[0]
-                self.addReportDataTable(GBID_temp,'temperature',temperature_temp)
-            #elif
-            print self.reportDataTable
-            self.updateReportTableToMQTT()
-            self.report_condition.notify()
-            self.report_condition.release()
+            try:
+                self.report_condition.acquire()
+                print 'debug : '+str(temp)
+                print "in processZigBeeReport"
+                if temp.split()[0] == '<-ReadTemperature' and temp.split('<-')[2].split(',')[0] !='failed':
+                    nwk_temp = temp.split('<-')[2].split(',')[1].rstrip()
+                    temperature_temp = temp.split('<-')[2].split(',')[0]
+                    GBID_temp = self.globalnetworkid_instance.getGlobalId(1,str(nwk_temp))[0]
+                    self.addReportDataTable(GBID_temp,'temperature',temperature_temp)
+                elif temp.split()[0] == '<-ReadIasZone' and temp.split('<-')[2].split(',')[0] !='failed':
+                    nwk_temp = temp.split('<-')[2].split(',')[2].rstrip()
+                    ias_temp = temp.split('<-')[2].split(',')[1]
+                    GBID_temp = self.globalnetworkid_instance.getGlobalId(1,str(nwk_temp))[0]
+                    self.addReportDataTable(GBID_temp,'ias',ias_temp)
+                print self.reportDataTable
+                self.updateReportTableToMQTT()
+                self.report_condition.notify()
+                self.report_condition.release()
+            except Exception as ins:
+                print "ERROR REPORT : "+str(ins)
+                self.report_condition.notify()
+                self.report_condition.release()
 
     def putCMDToSerialQueue(self,cmd):
         cmd = cmd+"\r\n"

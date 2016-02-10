@@ -43,6 +43,8 @@ def initSerial():
     sp.rtscts = False
     sp.dsrdtr = False
     sp.open()
+    sp.flushInput()
+    sp.flushOutput()
     return sp
 
 def readInputSerial(ser):
@@ -68,7 +70,9 @@ def writeCommandToSerial(ser):
     while True:
         temp = ''
         temp = toCombine_ViaSerial_Queue.get()
+        print "CMD TO SERIAL :"+str(temp)
         ser.write(temp)
+        time.sleep(0.1)
         # print temp
 
 def addCommandToWriteSerialQueue(cmd):
@@ -214,16 +218,28 @@ def processCommandFromSerial():
         print "String From Serial : "+str(temp)
         #print "CQ : "+str(temp)
         #if temp.count('|')>0:
-        if temp.split()[0] == '<|TableOfAddr' or temp.split()[0] == '<|TableOfAddrBad':
-            processTopology_Queue.put(temp)
-        elif temp.split()[0] == '<|ActiveEndPoints' or temp.split()[0] == '<|ActiveEndPointUnSuccess':
-            ZigBeeDESC_instance.queryActiveEndpoints_queue.put(temp)
-        elif temp.split()[0] == '<|QueryCluster' or temp.split()[0] == '<|simpleDescRespUnSuccess':
-            ZigBeeDESC_instance.queryCluster_queue.put(temp)
-        elif temp.split()[0] == '<-ReadTemperature':
-            reportValue_instance.addStringToZigBeeReportQueue(temp)
-        elif temp.split()[0]+temp.split()[1] == '<-ReadIasZone':
-            reportValue_instance.addStringToZigBeeReportQueue(temp)
+        try:
+            if temp.split()[0] == '<|TableOfAddr' or temp.split()[0] == '<|TableOfAddrBad':
+                processTopology_Queue.put(temp)
+            elif temp.split()[0] == '<|ActiveEndPoints' or temp.split()[0] == '<|ActiveEndPointUnSuccess':
+                ZigBeeDESC_instance.queryActiveEndpoints_queue.put(temp)
+            elif temp.split()[0] == '<|QueryCluster' or temp.split()[0] == '<|simpleDescRespUnSuccess':
+                ZigBeeDESC_instance.queryCluster_queue.put(temp)
+
+            elif temp.split()[0] == '<-ReadTemperature':
+                reportValue_instance.addStringToZigBeeReportQueue(temp)
+            elif temp.split()[0] == '<-ReadIasZone':
+                reportValue_instance.addStringToZigBeeReportQueue(temp)
+
+
+        except Exception as inst:
+            print "ERROR"
+            print type(inst)
+            print inst.args
+            print inst
+            print "Temp Value : "+str(temp)
+
+
 
             #     temp = temp[1].split()
             #     addr = temp[2]

@@ -40,7 +40,7 @@ class ZigBeeDESC(object):
             self.globalnetworkid_instance.cleanNodeDescTable()
             for tempEach in tempList:
                 self.queryActiveEndpoints(tempEach['NWK id'])
-                self.queryActiveEndpoints_Condition.wait()
+                self.queryActiveEndpoints_Condition.wait(60)
             self.globalnetworkid_instance.updateNodeDescTable()
             self.queryActiveEndpoints_Condition.release()
 
@@ -67,7 +67,7 @@ class ZigBeeDESC(object):
                 nwk_temp = temp.split(',')[1]
                 for dd in temp.split('<|')[2].split('|'):
                     self.queryClusters(nwk_temp,dd)
-                    self.queryNodeDESC_Condition.wait()
+                    self.queryNodeDESC_Condition.wait(15)
                 self.queryActiveEndpoints_Condition.notify()
             else:
                 #this case handle unsuccessful query
