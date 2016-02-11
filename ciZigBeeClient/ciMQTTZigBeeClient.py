@@ -230,6 +230,8 @@ def processCommandFromSerial():
                 reportValue_instance.addStringToZigBeeReportQueue(temp)
             elif temp.split()[0] == '<-ReadIasZone':
                 reportValue_instance.addStringToZigBeeReportQueue(temp)
+            elif temp.split()[0] == '<-On/Off':
+                reportValue_instance.addStringToZigBeeReportQueue(temp)
 
 
         except Exception as inst:
