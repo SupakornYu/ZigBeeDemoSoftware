@@ -3,7 +3,7 @@ import threading
 import json
 import time
 import paho.mqtt.client as mqtt
-from CoreSystem.MqttManagement import MqttManagement
+from CoreSystem.MqttManagement import MqttManagementPath
 
 from CoreSystem.GlobalNetworkIdSystem import GlobalNetworkIdManagement
 
@@ -22,13 +22,13 @@ class ESP8266Management(object):
     def on_connect(self,client, userdata, flags, rc):
         #print("Connected with result code "+str(rc))
         #client.subscribe("/ZigBeeAtmel/toMQTT")
-        client.subscribe(MqttManagement.ESP8266_REGISTER_NEW_DEVICE_TOPIC_GET)
-        client.subscribe(MqttManagement.ESP8266_REPORT_FROM_NODE_TO_CORE_GET)
+        client.subscribe(MqttManagementPath.ESP8266_REGISTER_NEW_DEVICE_TOPIC_GET)
+        client.subscribe(MqttManagementPath.ESP8266_REPORT_FROM_NODE_TO_CORE_GET)
         #client.subscribe(self.pathMqtt)
 
     def on_message(self,client, userdata, msg):
         #get data add to globaltable
-        if msg.topic == MqttManagement.ESP8266_REGISTER_NEW_DEVICE_TOPIC_GET:
+        if msg.topic == MqttManagementPath.ESP8266_REGISTER_NEW_DEVICE_TOPIC_GET:
             self.globalnetworkid_instance.registerNewDevice(2,json.loads(msg.payload)['CHIPID'])
             self.globalnetworkid_instance.updateGlobalTableToMqtt()
         #print(msg.topic+" "+str(msg.payload))

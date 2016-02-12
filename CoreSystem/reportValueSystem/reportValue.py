@@ -3,7 +3,7 @@ import threading
 import time
 import Queue
 import paho.mqtt.client as mqtt
-from CoreSystem.MqttManagement import MqttManagement
+from CoreSystem.MqttManagement import MqttManagementPath
 import json
 from datetime import datetime
 
@@ -12,8 +12,10 @@ class reportValue(object):
 
     def __init__(self,globalnetworkid_instance,toSerial_Queue,):
 
-        self.pathMqttReport = MqttManagement.CORE_REPORT_VALUE_TO_MQTT
-        self.pathMqttGetReportESP8266 = MqttManagement.ESP8266_REPORT_FROM_NODE_TO_CORE_GET
+        self.reportFlagRunner = False
+
+        self.pathMqttReport = MqttManagementPath.CORE_REPORT_VALUE_TO_MQTT
+        self.pathMqttGetReportESP8266 = MqttManagementPath.ESP8266_REPORT_FROM_NODE_TO_CORE_GET
         self.MQTTclient = mqtt.Client()
         self.startMQTTserver()
 
@@ -46,6 +48,9 @@ class reportValue(object):
     def on_message(self,client, userdata, msg):
         print(msg.topic+" "+str(msg.payload))
 
+    def setReportFlagRunner(self,temp_flag):
+        self.reportFlagRunner = temp_flag
+
 
     def startMQTTserver(self):
         self.MQTTclient.on_connect = self.on_connect
@@ -55,20 +60,23 @@ class reportValue(object):
 
     def taskZigBeeReportRunner(self):
         while True:
-            temp_table = self.globalnetworkid_instance.getNodeDESCTable()
-            #print "taskZigBeeReportRunner "+str(temp_table)
-            if temp_table!=[]:
-                self.report_condition.acquire()
-                for i in temp_table:
-                    for j in i['ClusterIn']:
-                        if j == '1026':
-                            self.readAttributeZigBee(i['GBID'][2],i['EP'],j,0)
-                            self.report_condition.wait(10)
-                        if j == '1280':
-                            self.readAttributeZigBee(i['GBID'][2],i['EP'],j,2)
-                            self.report_condition.wait(10)
-                self.report_condition.release()
-            time.sleep(3)
+            while self.reportFlagRunner:
+                print "Running ZigBee Report"
+                temp_table = self.globalnetworkid_instance.getNodeDESCTable()
+                #print "taskZigBeeReportRunner "+str(temp_table)
+                if temp_table!=[]:
+                    self.report_condition.acquire()
+                    for i in temp_table:
+                        for j in i['ClusterIn']:
+                            if j == '1026':
+                                self.readAttributeZigBee(i['GBID'][2],i['EP'],j,0)
+                                self.report_condition.wait(10)
+                            if j == '1280':
+                                self.readAttributeZigBee(i['GBID'][2],i['EP'],j,2)
+                                self.report_condition.wait(10)
+                    self.report_condition.release()
+                time.sleep(3)
+            time.sleep(1)
 
     def cleandataReportTable(self):
         self.reportDataTable = []

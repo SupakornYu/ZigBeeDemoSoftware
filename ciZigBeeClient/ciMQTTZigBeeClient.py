@@ -9,6 +9,7 @@ from CoreSystem.GlobalNetworkIdSystem import GlobalNetworkIdManagement
 from CoreSystem.ESP8266Core import ESP8266Management
 from CoreSystem.ZigBeeCore import ZigBeeDESC
 from CoreSystem.reportValueSystem import reportValue
+from CoreSystem.commandSystem import commandSystem
 
 #for store string before send to mqtt
 toMQTTServer_Queue = Queue.Queue()
@@ -21,6 +22,7 @@ links = []
 routerList = [{'NWK id':0}]
 hisRouterList = []
 
+flagTopologyRunner_list=[False]
 flagExecuteProcessTopology = False
 queryTopology_condition = threading.Condition()
 MQTTclient = mqtt.Client()
@@ -29,6 +31,7 @@ GlobalNetworkIdManagement_instance = GlobalNetworkIdManagement.GlobalNetworkIdMa
 ESP8266Management_instance = ESP8266Management.ESP8266Management(GlobalNetworkIdManagement_instance)
 ZigBeeDESC_instance = ZigBeeDESC.ZigBeeDESC(GlobalNetworkIdManagement_instance,toCombine_ViaSerial_Queue,queryTopology_condition)
 reportValue_instance = reportValue.reportValue(GlobalNetworkIdManagement_instance,toCombine_ViaSerial_Queue)
+commandSystem_instance = commandSystem.CommandSystem(GlobalNetworkIdManagement_instance,flagTopologyRunner_list,reportValue_instance,toCombine_ViaSerial_Queue)
 
 #config Serial port
 def initSerial():
@@ -204,9 +207,11 @@ def processTopology():
 def callGenTopologyEvery():
     while True:
         #have to push queue because we will recursive call processTopology
-        if not(flagExecuteProcessTopology):
-            processTopology()
-        time.sleep(10)
+        while flagTopologyRunner_list[0]:
+            if not(flagExecuteProcessTopology):
+                processTopology()
+            time.sleep(10)
+        time.sleep(1)
 
 
 

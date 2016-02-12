@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 #sys.path.append('../MqttManagement')
 #print os.path.abspath(os.path.dirname(__file__) + '/' + '../..')
 #sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
-from CoreSystem.MqttManagement import MqttManagement
+from CoreSystem.MqttManagement import MqttManagementPath
 import json
 
 
@@ -17,8 +17,8 @@ class GlobalNetworkIdManagement(object):
     #globalTable [globalId,deviceTechType,localNetworkId]
     def __init__(self,start=1):
 
-        self.pathMqttGlobalTable = MqttManagement.GLOBAL_ID_TOPIC_SEND
-        self.pathMqttNodeDescTable = MqttManagement.GLOBAL_DESC_NODE_SEND
+        self.pathMqttGlobalTable = MqttManagementPath.GLOBAL_ID_TOPIC_SEND
+        self.pathMqttNodeDescTable = MqttManagementPath.GLOBAL_DESC_NODE_SEND
         self.MQTTclient = mqtt.Client()
         self.startMQTTserver()
 
@@ -101,6 +101,13 @@ class GlobalNetworkIdManagement(object):
 
     def getNodeDESCTable(self):
         return self.nodeDescTable
+
+    def getEPFromNodeDESCTable(self,GBID,ClusterId):
+        temp = [dd for dd in self.nodeDescTable if dd['GBID'][0] == int(GBID) and str(ClusterId) in dd['ClusterIn']]
+        #always return first ep
+        if  temp != []:
+            return str(temp[0]['EP'])
+        return []
 
     def cleanNodeDescTable(self):
         self.nodeDescTable = []
