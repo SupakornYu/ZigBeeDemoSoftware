@@ -29,8 +29,9 @@ class ESP8266Management(object):
     def on_message(self,client, userdata, msg):
         #get data add to globaltable
         if msg.topic == MqttManagementPath.ESP8266_REGISTER_NEW_DEVICE_TOPIC_GET:
-            self.globalnetworkid_instance.registerNewDevice(2,json.loads(msg.payload)['CHIPID'])
+            self.globalnetworkid_instance.registerNewDevice(2,json.loads(msg.payload)['MACADDR'])
             self.globalnetworkid_instance.updateGlobalTableToMqtt()
+
         #print(msg.topic+" "+str(msg.payload))
 
 

@@ -33,7 +33,7 @@
 </head>
 <body>
     <div class="container">
-			<h1>ZigBee Demo</h1>
+			<h1>Multi-Protocol IoT Demo</h1>
 			<hr>
 			  MQTT connection status : <span class="wsStatus"></span>
 			<hr>
@@ -54,9 +54,36 @@
 			<hr>
                 <h3>Topology of All Device</h3>
                 <div class="row">
-					<div class="span4">
-						<div id="mynetwork"></div>
+					<div class="col-md-7">
+						<div class="span4">
+							<div id="mynetwork"></div>
+						</div>
 					</div>
+					<div class="col-md-5">
+						<div class="row">
+								<caption>Control Menu</caption>
+								<button type="button" id ="StartQuery" class="btn btn-danger">Start Query</button>
+								<button type="button" id ="StopQuery" class="btn btn-danger">Stop Query</button>
+						</div>
+						<div class="row">
+							<div class="bs-example" data-example-id="simple-table">
+								<table class="table" style="table-layout: fixed; word-wrap: break-word;"> <caption>Device Detail</caption>
+									<thead> <tr> <th>TOPIC</th> <th>DETAIL</th> </tr> </thead>
+									<tbody id="DescTable">
+										<tr> <th scope="row">Global ID</th> <td>0</td>  </tr>
+										<tr> <th scope="row">2</th> <td>Jacob</td>  </tr>
+										<tr> <th scope="row">3</th> <td>Larry</td>  </tr>
+										<tr> <th scope="row">2</th> <td>Jacob</td>  </tr>
+										<tr> <th scope="row">3</th> <td>Larry</td> </tr>
+										<tr> <th scope="row">1</th> <td>Mark</td>  </tr>
+										<tr> <th scope="row">2</th> <td>Jacob</td> </tr>
+										<tr> <th scope="row">3</th> <td>Larry</td> </tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					<div>
                 </div>
             <hr>
 

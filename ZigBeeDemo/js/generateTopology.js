@@ -61,10 +61,10 @@ TopologyGen.prototype.updateTopology = function updateTopology(objNodeDetailArr,
 
     //2.search for node and link that does not exist in data anymore.
     for(var i=0;i<objNodeDetailArr.length;i++){
-        if(this.nodes.get(objNodeDetailArr[i]['NWK id'])!==null){
+        if(this.nodes.get(objNodeDetailArr[i]['GBID'])!==null){
             tempNode = tempNode
                .filter(function (el) {
-                        return el['id'] !== objNodeDetailArr[i]['NWK id'];
+                        return el['id'] !== objNodeDetailArr[i]['GBID'];
                        });
         }
     }
@@ -103,11 +103,11 @@ TopologyGen.prototype.addNodeNotDuplicate = function addNodeNotDuplicate(objNode
             groupTemp = 'ZigBeeEndDevice';
         }
 
-        if(this.nodes.get(objNodeDetailArr[i]['NWK id'])===null) {
+        if(this.nodes.get(objNodeDetailArr[i]['GBID'])===null) {
             try {
                 this.nodes.add({
-                    id: objNodeDetailArr[i]['NWK id'],
-                    label: objNodeDetailArr[i]['NWK id'],
+                    id: objNodeDetailArr[i]['GBID'],
+                    label: objNodeDetailArr[i]['GBID'],
                     //label: objNodeDetailArr[i].label
                     group: groupTemp
                 });
@@ -125,8 +125,8 @@ TopologyGen.prototype.addNode = function addNode(objNodeDetailArr) {
         //check duplicate add
         try {
             this.nodes.add({
-                id: objNodeDetailArr[i]['NWK id'],
-                label: objNodeDetailArr[i]['NWK id']
+                id: objNodeDetailArr[i]['GBID'],
+                label: objNodeDetailArr[i]['GBID']
                 //label: objNodeDetailArr[i].label
                 //group: objNodeDetailArr[i].group
             });

@@ -52,6 +52,7 @@ class CommandSystem(object):
                             self.putCMDToSerialQueue('onOff 0x02 '+str(nwk_temp[2])+' '+EP_temp+' "'+value_temp+'"')
                             print 'DEBUG CMD : ZigBee -> '+str(value_temp)
                         elif nwk_temp[1] == 2:
+                            CMD_message_MQTT = [{"MACADDR":str(nwk_temp[2]),"CMD":"0001","VALUE":value_temp}]
                             self.MQTTclient.publish(self.cmdToESP8266+'/'+str(nwk_temp[2]),json.dumps([]),0,True)
                             print 'DEBUG CMD : ESP -> '+str(nwk_temp[2])
                 #for global config GBID = 0

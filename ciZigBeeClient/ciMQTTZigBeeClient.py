@@ -178,21 +178,36 @@ def processTopology():
             print nodes
             print links
 
-    dataSend = {'nodes':nodes,'links':links}
-    addDataToMQTTServerQueue(json.dumps(dataSend))
+    #dataSend = {'nodes':nodes,'links':links}
+    #addDataToMQTTServerQueue(json.dumps(dataSend))
 
 
     #clean nodeDESCTable
 
 
     #clean reportRoutineTable for preventing no device response
-
+    '''
     #register zigbee device to global network id
     for row in dataSend['nodes']:
         GlobalNetworkIdManagement_instance.registerNewDevice(1,row['NWK id'])
         #add nkw_id to queryActiveEndpoint
 
         #add node count to query for counting and send mqtt unsuccess -1
+    '''
+
+    dataSend = {'nodes':nodes,'links':links}
+    for i in range(0,len(dataSend['nodes'])):
+        GlobalNetworkIdManagement_instance.registerNewDevice(1,dataSend['nodes'][i]['NWK id'])
+        dataSend['nodes'][i]['GBID'] = GlobalNetworkIdManagement_instance.getGlobalId(1,dataSend['nodes'][i]['NWK id'])[0][0]
+    #convert link nwk address to GBID
+    for i in range(0,len(dataSend['links'])):
+        temp_from = GlobalNetworkIdManagement_instance.getGlobalId(1,dataSend['links'][i]['from'])[0][0]
+        temp_to = GlobalNetworkIdManagement_instance.getGlobalId(1,dataSend['links'][i]['to'])[0][0]
+        dataSend['links'][i]['from'] = str(temp_from)
+        dataSend['links'][i]['to'] = str(temp_to)
+
+    #send zigbee node topology with global id
+    addDataToMQTTServerQueue(json.dumps(dataSend))
 
     GlobalNetworkIdManagement_instance.updateGlobalTableToMqtt()
     ZigBeeDESC_instance.putNetworkAddressListToQueue(dataSend['nodes'])

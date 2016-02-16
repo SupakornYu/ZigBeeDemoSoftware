@@ -8,6 +8,11 @@ var MQTT_PORT = 9001;
 //{protocolType:'ZigBee',networkId:1244,from:12566,deviceType:'enddevice',deviceDuty:'multisensor',value:25.3}]
 var availableDevice = [];
 
+var DESCTable;
+var GlobalTable;
+var reportTable;
+var zigbeeTopologyTable;
+
 var nodes = [
     {id: 1, label: 'Node 1'},
     {id: 2, label: 'Node 2'},
@@ -55,6 +60,17 @@ removeDeviceFromTable = function(deviceAddr){
 
 
 
+sendCMDToCoreSystem = function(message,destination,retained){
+
+    var message = new Paho.MQTT.Message(message);
+    message.destinationName = destination;
+    message.retained = retained;
+    client.send(message);
+
+}
+
+
+
 $(document).ready(function(){
 
 
@@ -76,7 +92,13 @@ $(document).ready(function(){
         $wsStatus.attr("class", 'label label-success');
         $wsStatus.text('open');
         console.log("onConnect");
+
         client.subscribe("/ZigBeeAtmel/toMQTT");
+        client.subscribe("multiProtocolGateway/Demo/toMQTT/Report");
+        client.subscribe("multiProtocolGateway/Demo/toMQTT/GlobalDESC");
+        client.subscribe("multiProtocolGateway/Demo/toMQTT/GlobalId");
+
+
         message = new Paho.MQTT.Message("Hello");
         message.destinationName = "/ZigBeeAtmel/toCi";
         message.retained = true;
@@ -95,18 +117,66 @@ $(document).ready(function(){
 
     // called when a message arrives
     function onMessageArrived(message) {
-        console.log("onMessageArrived:"+message.payloadString);
-        tttt = JSON.parse(message.payloadString);
-        console.log(tttt);
-        //topologyDiv.addNode([{"NWK id": "0", "LQI": "0", "deviceType": "0"}]);
-        topologyDiv.updateTopology(tttt['nodes'],tttt['links']);
+        //console.log("Topic : "+message.destinationName+" ,onMessageArrived : "+message.payloadString);
+        //console.log(typeof(message.destinationName))
+        if(message.destinationName === "/ZigBeeAtmel/toMQTT"){
+            zigbeeTopologyTable = JSON.parse(message.payloadString);
+            console.log(zigbeeTopologyTable);
+            //topologyDiv.addNode([{"NWK id": "0", "LQI": "0", "deviceType": "0"}]);
+
+            //add wifi node here
+            zigbeeTopologyTable['nodes'].push({'GBID': '0','LQI': "0",'NWK id': "Aggregator",'deviceType': "0"})
+            zigbeeTopologyTable['links'].push({'from': "0",'to':"2"})
+
+            topologyDiv.updateTopology(zigbeeTopologyTable['nodes'],zigbeeTopologyTable['links']);
+        }else if(message.destinationName === "multiProtocolGateway/Demo/toMQTT/GlobalDESC"){
+            DESCTable = JSON.parse(message.payloadString);
+            console.log(DESCTable);
+            //$('#StartQuery').prop('disabled', false);
+            //$('#StopQuery').prop('disabled', true);
+        }else if(message.destinationName === "multiProtocolGateway/Demo/toMQTT/Report"){
+            reportTable = JSON.parse(message.payloadString);
+            console.log(reportTable);
+        }else if(message.destinationName === "multiProtocolGateway/Demo/toMQTT/GlobalId"){
+            GlobalTable = JSON.parse(message.payloadString);
+            console.log(GlobalTable);
+        }
+
     };
 
     function sendMessageToCi(message){
         client.send(message);
     };
 
+
+
     topologyDiv = new TopologyGen(nodes,edges);
+
+    //add aggregator node
+    topologyDiv.getNode().add(
+        {id: 'aggregator', label: 'Aggretor'}
+    );
+    topologyDiv.getEdge().add({
+                    from: 'aggregator',
+                    to: '0'
+                });
+
+    $('#StartQuery').prop('disabled', false);
+    $('#StopQuery').prop('disabled', true);
+
+    $( "#StartQuery" ).click(function() {
+        $('#StartQuery').prop('disabled', true);
+        $('#StopQuery').prop('disabled', false);
+        topologyDiv.clearAllData()
+        sendCMDToCoreSystem('[{"GBID":"0","CMD":"0002","VALUE":"1"}]','multiProtocolGateway/Demo/fromMQTT/CMD',true)
+    });
+
+    $( "#StopQuery" ).click(function() {
+        $('#StopQuery').prop('disabled', true);
+        $('#StartQuery').prop('disabled', false);
+        sendCMDToCoreSystem('[{"GBID":"0","CMD":"0002","VALUE":"0"}]','multiProtocolGateway/Demo/fromMQTT/CMD',true)
+
+    });
 
 
 
