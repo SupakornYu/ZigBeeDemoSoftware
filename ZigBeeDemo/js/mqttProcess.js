@@ -178,6 +178,12 @@ $(document).ready(function(){
                     content += element['ias'];
                     content += "</button></div>";
                     $('#NodeReport').append(content);
+                }else if(Object.keys(element)[1]=="Light"){
+                    var content = "<div id=\""+ element['GBID'][0] +"Light\"><button type=\"button\" class=\""+element['GBID'][0]+" reportBtn btn btn-danger\">";
+                    content +="LIGHT : ";
+                    content += element['Light'];
+                    content += "</button></div>";
+                    $('#NodeReport').append(content);
                 }else if(Object.keys(element)[1]=="On/Off"){
                     var value_temp = (element['On/Off'] == 1 ? "ON" : "OFF");
                     $('.'+element['GBID'][0]+'.onoff.CMDBtn.btn').html(value_temp);
@@ -211,6 +217,7 @@ $(document).ready(function(){
     topologyDiv.getInstanceObj().on("click", function (params) {
         $('#NodeDetailTable').empty();
         $('.reportBtn').hide();
+        $('.CMDBtn').hide();
         params.event = "[original event]";
         //console.log(JSON.stringify(params, null, 4));
         GBIDNodeClick = parseInt(params['nodes'][0]);
