@@ -9,7 +9,7 @@ var MQTT_PORT = 9001;
 var availableDevice = [];
 
 var DESCTable;
-var GlobalTable;
+var GlobalTable = [];
 var reportTable;
 var zigbeeTopologyTable;
 var GBIDNodeClick = 0;
@@ -135,6 +135,20 @@ $(document).ready(function(){
             //topologyDiv.addNode([{"NWK id": "0", "LQI": "0", "deviceType": "0"}]);
 
             //add wifi node here
+            ESP8266_node = []
+
+
+            for(i=0;i<GlobalTable.length;i++){
+                if(GlobalTable[i][1]===2){
+                    ESP8266_node.push(GlobalTable[i][0]);
+                    zigbeeTopologyTable['nodes'].push({'GBID': GlobalTable[i][0],'RSSI': "0",'NWK id': "",'deviceType': "ESP8266"});
+                    zigbeeTopologyTable['links'].push({'from': 0,'to':GlobalTable[i][0]});
+                }
+            }
+
+
+
+
             zigbeeTopologyTable['nodes'].push({'GBID': 0,'LQI': "0",'NWK id': "Aggregator",'deviceType': "Aggregator"})
             ZigBeeCoorData = zigbeeTopologyTable['nodes'].filter(function(tt){return tt['deviceType']==='0'})
             var ZigBeeCoorGBID = ZigBeeCoorData.length !== 0 ? ZigBeeCoorData[0]['GBID'] : 0
@@ -217,6 +231,49 @@ $(document).ready(function(){
                         content += "<tr> <th scope=\"row\">GBID</th> <td>"+ element[key][0] +"</td>  </tr>";
                         content += "<tr> <th scope=\"row\">Device Type Number</th> <td>"+ element[key][1] +"</td>  </tr>";
                         content += "<tr> <th scope=\"row\">Network Address in ZigBee</th> <td>"+ element[key][2] +"</td>  </tr>";
+                    }else{
+                        content += "<tr> <th scope=\"row\">" + key +"</th> <td>"+ element[key] +"</td>  </tr>";
+                    }
+                });
+                content += "</table></div>";
+
+                $('#NodeDetailTable').append(content);
+
+                $('.'+GBIDNodeClick+'.reportBtn').show();
+
+
+                var uniqueClusterInArray = element['ClusterIn'].filter(function(item, pos) {
+                        return element['ClusterIn'].indexOf(item) == pos;
+                    });
+
+                $('.CMDBtn').remove();
+                for(i=0;i<uniqueClusterInArray.length;i++){
+                    //console.log(i);
+                    if(uniqueClusterInArray[i]==="6"){
+                        console.log('on/off');
+
+
+
+                        content = "<button type=\"button\" class=\""+element['GBID'][0]+" onoff CMDBtn btn btn-warning\">";
+                        content += "ON";
+                        content += "</button>";
+                        $('#ControlNode').append(content);
+                        //$('#'+element['GBID'][0]+'temperature '+'.reportBtn').show();
+                    }
+                }
+
+            }else if(element['GBID'][1]===2){
+                //ESP8266
+                var content = "<div class=\"bs-example\" data-example-id=\"simple-table\">\
+								<table class=\"table\" style=\"table-layout: fixed; word-wrap: break-word;\"> <caption>Device Detail</caption>\
+								<thead> <tr> <th>TOPIC</th> <th>DETAIL</th> </tr> </thead>\
+								<tbody>";
+                Object.keys(element).forEach(function(key) {
+                    //console.log(key, element[key]);
+                    if(key=='GBID'){
+                        content += "<tr> <th scope=\"row\">GBID</th> <td>"+ element[key][0] +"</td>  </tr>";
+                        content += "<tr> <th scope=\"row\">Device Type Number</th> <td>"+ element[key][1] +"</td>  </tr>";
+                        content += "<tr> <th scope=\"row\">MAC ADDRESS</th> <td>"+ element[key][2] +"</td>  </tr>";
                     }else{
                         content += "<tr> <th scope=\"row\">" + key +"</th> <td>"+ element[key] +"</td>  </tr>";
                     }

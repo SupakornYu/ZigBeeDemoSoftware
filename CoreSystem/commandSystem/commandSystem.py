@@ -55,7 +55,8 @@ class CommandSystem(object):
 
                         elif nwk_temp[1] == 2:
                             CMD_message_MQTT = [{"MACADDR":str(nwk_temp[2]),"CMD":"0001","VALUE":value_temp}]
-                            self.MQTTclient.publish(self.cmdToESP8266+'/'+str(nwk_temp[2]),json.dumps([]),0,True)
+                            #print self.cmdToESP8266+'/'+str(nwk_temp[2])
+                            self.MQTTclient.publish(self.cmdToESP8266+'/'+str(nwk_temp[2]),json.dumps(CMD_message_MQTT),0,True)
                             print 'DEBUG CMD : ESP -> '+str(nwk_temp[2])
 
                         #cheating here

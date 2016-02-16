@@ -112,6 +112,15 @@ class GlobalNetworkIdManagement(object):
     def cleanNodeDescTable(self):
         self.nodeDescTable = []
 
+    def cleanNodeDescTableWithDeviceType(self,deviceTechType):
+        if self.nodeDescTable != []:
+            if deviceTechType == 0:
+                self.nodeDescTable = []
+            elif deviceTechType == 1:
+                self.nodeDescTable = [d for d in self.nodeDescTable if d['GBID'][1] !=1]
+            elif deviceTechType == 2:
+                self.nodeDescTable = [d for d in self.nodeDescTable if d['GBID'][1] !=2]
+
     #def deleteGlobalId(self,option,):
 
 

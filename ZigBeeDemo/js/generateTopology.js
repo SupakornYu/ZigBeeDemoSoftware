@@ -48,6 +48,9 @@ function TopologyGen(nodes,edges){
             },
             Aggregator: {
                 color: 'yellow'
+            },
+            ESP8266: {
+                color: 'Blue'
             }
         }
     };
@@ -107,6 +110,8 @@ TopologyGen.prototype.addNodeNotDuplicate = function addNodeNotDuplicate(objNode
             groupTemp = 'ZigBeeEndDevice';
         }else if(objNodeDetailArr[i]['deviceType']==="Aggregator"){
             groupTemp = 'Aggregator';
+        }else if(objNodeDetailArr[i]['deviceType']==="ESP8266"){
+            groupTemp = 'ESP8266';
         }
 
         if(this.nodes.get(objNodeDetailArr[i]['GBID'])===null) {

@@ -41,12 +41,18 @@ class reportValue(object):
 
     def on_connect(self,client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
-        #client.subscribe("/ZigBeeAtmel/toMQTT")
-        client.subscribe("/ZigBeeAtmel/toCi")
-        #client.subscribe(self.pathMqtt)
+        client.subscribe(self.pathMqttGetReportESP8266)
+
 
     def on_message(self,client, userdata, msg):
         print(msg.topic+" "+str(msg.payload))
+        if msg.topic == self.pathMqttGetReportESP8266:
+            temp_list_payload = json.loads(msg.payload)
+            for i in temp_list_payload:
+                GBID_temp = self.globalnetworkid_instance.getGlobalId(2,i['MACADDR'])[0]
+                self.addReportDataTable(GBID_temp,'temperature',i['Temperature'])
+                self.addReportDataTable(GBID_temp,'Light',i['Light'])
+            self.updateReportTableToMQTT()
 
     def setReportFlagRunner(self,temp_flag):
         self.reportFlagRunner = temp_flag
@@ -67,13 +73,15 @@ class reportValue(object):
                 if temp_table!=[]:
                     self.report_condition.acquire()
                     for i in temp_table:
-                        for j in i['ClusterIn']:
-                            if j == '1026':
-                                self.readAttributeZigBee(i['GBID'][2],i['EP'],j,0)
-                                self.report_condition.wait(10)
-                            if j == '1280':
-                                self.readAttributeZigBee(i['GBID'][2],i['EP'],j,2)
-                                self.report_condition.wait(10)
+                        if i['GBID'][1]==1:
+                            for j in i['ClusterIn']:
+                                if j == '1026':
+                                    self.readAttributeZigBee(i['GBID'][2],i['EP'],j,0)
+                                    self.report_condition.wait(10)
+                                if j == '1280':
+                                    self.readAttributeZigBee(i['GBID'][2],i['EP'],j,2)
+                                    self.report_condition.wait(10)
+
                     self.report_condition.release()
                 time.sleep(3)
             time.sleep(1)
