@@ -45,10 +45,14 @@ function TopologyGen(nodes,edges){
             },
             ZigBeeEndDevice: {
                 color: 'green'
+            },
+            Aggregator: {
+                color: 'yellow'
             }
         }
     };
-    var network = new vis.Network(container, data, options);
+
+    network = new vis.Network(container, data, options);
 
 }
 
@@ -101,6 +105,8 @@ TopologyGen.prototype.addNodeNotDuplicate = function addNodeNotDuplicate(objNode
             groupTemp = 'ZigBeeRouter';
         }else if(objNodeDetailArr[i]['deviceType']==="2"){
             groupTemp = 'ZigBeeEndDevice';
+        }else if(objNodeDetailArr[i]['deviceType']==="Aggregator"){
+            groupTemp = 'Aggregator';
         }
 
         if(this.nodes.get(objNodeDetailArr[i]['GBID'])===null) {
@@ -233,5 +239,11 @@ TopologyGen.prototype.clearAllData = function clearAllData() {
 
     this.nodes.clear();
     this.edges.clear();
+
+};
+
+TopologyGen.prototype.getInstanceObj = function clearAllData() {
+
+    return network
 
 };

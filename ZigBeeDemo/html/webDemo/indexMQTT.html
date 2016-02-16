@@ -17,6 +17,8 @@
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+	    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
         <script src="../../js/mqttws31.js"></script>
 
 		<script type="text/javascript" src="../../bower_components/vis/dist/vis.js"></script>
@@ -60,25 +62,31 @@
 						</div>
 					</div>
 					<div class="col-md-5">
+						<hr>
 						<div class="row">
-								<caption>Control Menu</caption>
+								<caption>Config Menu</caption>
 								<button type="button" id ="StartQuery" class="btn btn-danger">Start Query</button>
 								<button type="button" id ="StopQuery" class="btn btn-danger">Stop Query</button>
 						</div>
-						<div class="row">
+						<hr>
+						<caption>Sensor Report</caption>
+						<div id="NodeReport" class="row">
+
+
+						</div>
+						<hr>
+						<div id="ControlNode" class="row">
+								<caption>Control Device</caption>
+
+						</div>
+						<hr>
+						<div id="NodeDetailTable" class="row">
 							<div class="bs-example" data-example-id="simple-table">
 								<table class="table" style="table-layout: fixed; word-wrap: break-word;"> <caption>Device Detail</caption>
 									<thead> <tr> <th>TOPIC</th> <th>DETAIL</th> </tr> </thead>
 									<tbody id="DescTable">
 										<tr> <th scope="row">Global ID</th> <td>0</td>  </tr>
 										<tr> <th scope="row">2</th> <td>Jacob</td>  </tr>
-										<tr> <th scope="row">3</th> <td>Larry</td>  </tr>
-										<tr> <th scope="row">2</th> <td>Jacob</td>  </tr>
-										<tr> <th scope="row">3</th> <td>Larry</td> </tr>
-										<tr> <th scope="row">1</th> <td>Mark</td>  </tr>
-										<tr> <th scope="row">2</th> <td>Jacob</td> </tr>
-										<tr> <th scope="row">3</th> <td>Larry</td> </tr>
-
 									</tbody>
 								</table>
 							</div>

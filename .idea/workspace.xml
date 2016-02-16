@@ -3,14 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="d345364c-b5d1-4d27-9e92-20bef217b240" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CoreSystem/ESP8266Core/ESP8266Management.py" afterPath="$PROJECT_DIR$/CoreSystem/ESP8266Core/ESP8266Management.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CoreSystem/MqttManagement/MqttManagementPath.py" afterPath="$PROJECT_DIR$/CoreSystem/MqttManagement/MqttManagementPath.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ciTeminalSerial/ciClient.py" afterPath="$PROJECT_DIR$/ciTeminalSerial/ciClient.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ciZigBeeClient/ciMQTTZigBeeClient.py" afterPath="$PROJECT_DIR$/ciZigBeeClient/ciMQTTZigBeeClient.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CoreSystem/commandSystem/commandSystem.py" afterPath="$PROJECT_DIR$/CoreSystem/commandSystem/commandSystem.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ZigBeeDemo/js/generateTopology.js" afterPath="$PROJECT_DIR$/ZigBeeDemo/js/generateTopology.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ZigBeeDemo/html/webDemo/indexMQTT.html" afterPath="$PROJECT_DIR$/ZigBeeDemo/html/webDemo/indexMQTT.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ZigBeeDemo/js/mqttProcess.js" afterPath="$PROJECT_DIR$/ZigBeeDemo/js/mqttProcess.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="iotDemo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,7 +26,7 @@
     <SUITE FILE_PATH="coverage/iotDemo$GlobalNetworkIdManagement.coverage" NAME="GlobalNetworkIdManagement Coverage Results" MODIFIED="1454318622216" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CoreSystem/GlobalNetworkIdSystem" />
     <SUITE FILE_PATH="coverage/iotDemo$ciClient.coverage" NAME="ciClient Coverage Results" MODIFIED="1455277001622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ciTeminalSerial" />
     <SUITE FILE_PATH="coverage/iotDemo$GenerateGlobalNetworkID.coverage" NAME="GenerateGlobalNetworkID Coverage Results" MODIFIED="1454065684002" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CoreSystem/GenerateGlobalNetworkID" />
-    <SUITE FILE_PATH="coverage/iotDemo$ciMQTTZigBeeClient.coverage" NAME="ciMQTTZigBeeClient Coverage Results" MODIFIED="1455570814891" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ciZigBeeClient" />
+    <SUITE FILE_PATH="coverage/iotDemo$ciMQTTZigBeeClient.coverage" NAME="ciMQTTZigBeeClient Coverage Results" MODIFIED="1455650433116" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ciZigBeeClient" />
     <SUITE FILE_PATH="coverage/iotDemo$ciSimpleClientAndServer.coverage" NAME="ciSimpleClientAndServer Coverage Results" MODIFIED="1447308655329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ciSimplyServerAndClient" />
     <SUITE FILE_PATH="coverage/iotDemo$commandSystem.coverage" NAME="commandSystem Coverage Results" MODIFIED="1455194606063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CoreSystem/commandSystem" />
   </component>
@@ -45,10 +42,10 @@
       <file leaf-file-name="indexMQTT.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ZigBeeDemo/html/webDemo/indexMQTT.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="5.4590163">
-              <caret line="65" column="68" selection-start-line="65" selection-start-column="59" selection-end-line="65" selection-end-column="68" />
+            <state vertical-scroll-proportion="-8.882353">
+              <caret line="77" column="44" selection-start-line="77" selection-start-column="33" selection-end-line="77" selection-end-column="44" />
               <folding>
-                <element signature="n#style#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -57,10 +54,16 @@
       <file leaf-file-name="mqttProcess.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ZigBeeDemo/js/mqttProcess.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.620689">
-              <caret line="127" column="77" selection-start-line="127" selection-start-column="71" selection-end-line="127" selection-end-column="77" />
+            <state vertical-scroll-proportion="-9.137931">
+              <caret line="288" column="53" selection-start-line="288" selection-start-column="53" selection-end-line="288" selection-end-column="53" />
               <folding>
                 <element signature="e#0#42#0" expanded="false" />
+                <marker date="1455648882800" expanded="true" signature="7614:7653" placeholder="..." />
+                <marker date="1455648882800" expanded="true" signature="7614:7744" placeholder="..." />
+                <marker date="1455648882800" expanded="true" signature="7614:7801" placeholder="..." />
+                <marker date="1455648882800" expanded="true" signature="7614:7819" placeholder="..." />
+                <marker date="1455648882800" expanded="true" signature="7656:7699" placeholder="..." />
+                <marker date="1455648882800" expanded="true" signature="7701:7744" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -69,8 +72,8 @@
       <file leaf-file-name="generateTopology.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ZigBeeDemo/js/generateTopology.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.724138">
-              <caret line="147" column="52" selection-start-line="147" selection-start-column="46" selection-end-line="147" selection-end-column="52" />
+            <state vertical-scroll-proportion="131.3793">
+              <caret line="54" column="4" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="4" />
               <folding>
                 <element signature="n#!!doc;n#TopologyGen#0" expanded="false" />
               </folding>
@@ -93,8 +96,8 @@
       <file leaf-file-name="commandSystem.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CoreSystem/commandSystem/commandSystem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="48" column="38" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
+            <state vertical-scroll-proportion="-17.103449">
+              <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -105,8 +108,8 @@
       <file leaf-file-name="reportValue.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CoreSystem/reportValueSystem/reportValue.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="138" column="23" selection-start-line="138" selection-start-column="23" selection-end-line="138" selection-end-column="23" />
+            <state vertical-scroll-proportion="-8.4827585">
+              <caret line="99" column="38" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="38" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -114,11 +117,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GlobalNetworkIdManagement.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GlobalNetworkIdManagement.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CoreSystem/GlobalNetworkIdSystem/GlobalNetworkIdManagement.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="109" column="8" selection-start-line="109" selection-start-column="8" selection-end-line="109" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.29123327">
+              <caret line="78" column="21" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="21" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -130,7 +133,7 @@
         <entry file="file://$PROJECT_DIR$/CoreSystem/ESP8266Core/ESP8266Management.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
+              <caret line="31" column="87" selection-start-line="31" selection-start-column="87" selection-end-line="31" selection-end-column="87" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -138,11 +141,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MqttManagementPath.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MqttManagementPath.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CoreSystem/MqttManagement/MqttManagementPath.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.31847134">
-              <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="4" column="65" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -203,13 +206,13 @@
         <option value="$PROJECT_DIR$/CoreSystem/ZigBeeCore/ZigBeeDESC.py" />
         <option value="$PROJECT_DIR$/CoreSystem/GlobalNetworkIdSystem/GlobalNetworkIdManagement.py" />
         <option value="$PROJECT_DIR$/CoreSystem/reportValueSystem/reportValue.py" />
-        <option value="$PROJECT_DIR$/CoreSystem/ESP8266Core/ESP8266Management.py" />
         <option value="$PROJECT_DIR$/CoreSystem/MqttManagement/MqttManagementPath.py" />
-        <option value="$PROJECT_DIR$/CoreSystem/commandSystem/commandSystem.py" />
-        <option value="$PROJECT_DIR$/ZigBeeDemo/html/webDemo/indexMQTT.html" />
         <option value="$PROJECT_DIR$/ciZigBeeClient/ciMQTTZigBeeClient.py" />
-        <option value="$PROJECT_DIR$/ZigBeeDemo/js/mqttProcess.js" />
         <option value="$PROJECT_DIR$/ZigBeeDemo/js/generateTopology.js" />
+        <option value="$PROJECT_DIR$/ZigBeeDemo/html/webDemo/indexMQTT.html" />
+        <option value="$PROJECT_DIR$/ZigBeeDemo/js/mqttProcess.js" />
+        <option value="$PROJECT_DIR$/CoreSystem/commandSystem/commandSystem.py" />
+        <option value="$PROJECT_DIR$/CoreSystem/ESP8266Core/ESP8266Management.py" />
       </list>
     </option>
   </component>
@@ -938,18 +941,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936078" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3372973" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264865" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29081082" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30054054" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32756758" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16364606" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21081081" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21081081" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39915523" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1039,7 +1042,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#style#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1058,6 +1061,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1067,6 +1071,12 @@
           <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
           <folding>
             <element signature="e#0#42#0" expanded="false" />
+            <marker date="1455648882800" expanded="true" signature="7614:7653" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7614:7744" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7614:7801" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7614:7819" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7656:7699" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7701:7744" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1110,7 +1120,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#style#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1129,6 +1139,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="45" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1138,6 +1149,12 @@
           <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
           <folding>
             <element signature="e#0#42#0" expanded="false" />
+            <marker date="1455648882800" expanded="true" signature="7614:7653" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7614:7744" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7614:7801" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7614:7819" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7656:7699" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7701:7744" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -1222,6 +1239,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="53" selection-start-line="10" selection-start-column="53" selection-end-line="10" selection-end-column="53" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1308,16 +1326,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CoreSystem/GlobalNetworkIdSystem/GlobalNetworkIdManagement.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="109" column="8" selection-start-line="109" selection-start-column="8" selection-end-line="109" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ciSimplyServerAndClient/ciSimpleClientAndServer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.7866242">
@@ -1333,36 +1341,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CoreSystem/reportValueSystem/reportValue.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="138" column="23" selection-start-line="138" selection-start-column="23" selection-end-line="138" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CoreSystem/commandSystem/commandSystem.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="38" selection-start-line="48" selection-start-column="38" selection-end-line="48" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ZigBeeDemo/html/webDemo/indexMQTT.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.4590163">
-          <caret line="65" column="68" selection-start-line="65" selection-start-column="59" selection-end-line="65" selection-end-column="68" />
-          <folding>
-            <element signature="n#style#0;n#table#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ZigBeeDemo/img/bulbon.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1371,6 +1349,16 @@
     <entry file="file://$PROJECT_DIR$/ZigBeeDemo/img/Aggregator.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZigBeeDemo/html/webDemo/indexMQTT.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.882353">
+          <caret line="77" column="44" selection-start-line="77" selection-start-column="33" selection-end-line="77" selection-end-column="44" />
+          <folding>
+            <element signature="n#style#0;n#table#0;n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ciZigBeeClient/ciMQTTZigBeeClient.py">
@@ -1383,30 +1371,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZigBeeDemo/js/mqttProcess.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.620689">
-          <caret line="127" column="77" selection-start-line="127" selection-start-column="71" selection-end-line="127" selection-end-column="77" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ZigBeeDemo/js/generateTopology.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.724138">
-          <caret line="147" column="52" selection-start-line="147" selection-start-column="46" selection-end-line="147" selection-end-column="52" />
+        <state vertical-scroll-proportion="131.3793">
+          <caret line="54" column="4" selection-start-line="54" selection-start-column="4" selection-end-line="54" selection-end-column="4" />
           <folding>
             <element signature="n#!!doc;n#TopologyGen#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CoreSystem/ESP8266Core/ESP8266Management.py">
+    <entry file="file://$PROJECT_DIR$/ZigBeeDemo/js/mqttProcess.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
+        <state vertical-scroll-proportion="-9.137931">
+          <caret line="288" column="53" selection-start-line="288" selection-start-column="53" selection-end-line="288" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#42#0" expanded="false" />
+            <marker date="1455648882800" expanded="true" signature="7614:7653" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7614:7744" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7614:7801" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7614:7819" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7656:7699" placeholder="..." />
+            <marker date="1455648882800" expanded="true" signature="7701:7744" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreSystem/reportValueSystem/reportValue.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.4827585">
+          <caret line="99" column="38" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreSystem/commandSystem/commandSystem.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.103449">
+          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -1415,9 +1419,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CoreSystem/MqttManagement/MqttManagementPath.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31847134">
-          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="65" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="65" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreSystem/ESP8266Core/ESP8266Management.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="87" selection-start-line="31" selection-start-column="87" selection-end-line="31" selection-end-column="87" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CoreSystem/GlobalNetworkIdSystem/GlobalNetworkIdManagement.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29123327">
+          <caret line="78" column="21" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
