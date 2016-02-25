@@ -90,10 +90,10 @@ class reportValue(object):
         self.reportDataTable = []
 
     def addReportDataTable(self,GBID,ValueType,Value):
-        if [dd for dd in self.reportDataTable if dd['GBID'] == GBID and dd.keys()[1] == ValueType] == []:
+        if [dd for dd in self.reportDataTable if dd['GBID'] == GBID and dd.keys()[0] == ValueType] == []:
             self.reportDataTable.append({"GBID":GBID,str(ValueType):str(Value),"time":str(datetime.now())})
         else:
-            self.reportDataTable = [dd for dd in self.reportDataTable if not(dd['GBID'] == GBID and dd.keys()[1] == ValueType)]
+            self.reportDataTable = [dd for dd in self.reportDataTable if not(dd['GBID'] == GBID and dd.keys()[0] == ValueType)]
             self.reportDataTable.append({"GBID":GBID,str(ValueType):str(Value),"time":str(datetime.now())})
 
     def readAttributeZigBee(self,networkAddress,EP,clusterID,attributeID):
@@ -147,7 +147,8 @@ class reportValue(object):
                 print "ERROR AUTO REPORT : "+str(ins)
 
 
-
+    def getReportTable(self):
+        return self.reportDataTable
 
     def putCMDToSerialQueue(self,cmd):
         cmd = cmd+"\r\n"

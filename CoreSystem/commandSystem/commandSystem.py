@@ -60,7 +60,7 @@ class CommandSystem(object):
                             print 'DEBUG CMD : ESP -> '+str(nwk_temp[2])
 
                         #cheating here
-
+                        print "report Table : "+str(self.report_instance.getReportTable())
                         self.report_instance.addReportDataTable(nwk_temp,'On/Off',i['VALUE'])
                         self.report_instance.updateReportTableToMQTT()
 

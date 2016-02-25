@@ -184,9 +184,10 @@ $(document).ready(function(){
                     content += element['Light'];
                     content += "</button></div>";
                     $('#NodeReport').append(content);
-                }else if(Object.keys(element)[1]=="On/Off"){
+                }else if(Object.keys(element)[0]=="On/Off"){
                     var value_temp = (element['On/Off'] == 1 ? "ON" : "OFF");
                     $('.'+element['GBID'][0]+'.onoff.CMDBtn.btn').html(value_temp);
+                    console.log(element['GBID'][0]);
                     var Btn_color = (element['On/Off'] == 1 ? element['GBID'][0]+' onoff CMDBtn btn btn-warning' : element['GBID'][0]+' onoff CMDBtn btn btn-default');
                     $('.'+element['GBID'][0]+'.onoff.CMDBtn.btn').attr('class', Btn_color);
                 }
