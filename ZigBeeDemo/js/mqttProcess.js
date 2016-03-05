@@ -178,7 +178,7 @@ $(document).ready(function(){
                     content += element['ias'];
                     content += "</button></div>";
                     $('#NodeReport').append(content);
-                }else if(Object.keys(element)[1]=="Light"){
+                }else if(Object.keys(element)[0]=="Light"){
                     var content = "<div id=\""+ element['GBID'][0] +"Light\"><button type=\"button\" class=\""+element['GBID'][0]+" reportBtn btn btn-danger\">";
                     content +="LIGHT : ";
                     content += element['Light'];

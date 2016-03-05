@@ -90,11 +90,13 @@ class reportValue(object):
         self.reportDataTable = []
 
     def addReportDataTable(self,GBID,ValueType,Value):
-        if [dd for dd in self.reportDataTable if dd['GBID'] == GBID and dd.keys()[0] == ValueType] == []:
+        if [dd for dd in self.reportDataTable if dd['GBID'] == GBID and ValueType in dd.keys() ] == []:
             self.reportDataTable.append({"GBID":GBID,str(ValueType):str(Value),"time":str(datetime.now())})
         else:
-            self.reportDataTable = [dd for dd in self.reportDataTable if not(dd['GBID'] == GBID and dd.keys()[0] == ValueType)]
+            self.reportDataTable = [dd for dd in self.reportDataTable if not(dd['GBID'] == GBID and ValueType in dd.keys() )]
             self.reportDataTable.append({"GBID":GBID,str(ValueType):str(Value),"time":str(datetime.now())})
+
+        print 'from end report table :'+str(self.reportDataTable)
 
     def readAttributeZigBee(self,networkAddress,EP,clusterID,attributeID):
         cmd_temp = "readAttribute 0x02 "+str(networkAddress)+" "+str(EP)+" "+str(clusterID)+" "+str(attributeID)
