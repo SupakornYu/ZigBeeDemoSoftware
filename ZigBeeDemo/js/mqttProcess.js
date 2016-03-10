@@ -78,6 +78,11 @@ sendOnOffCMD = function(GBID,value){
     sendCMDToCoreSystem(CMD_TEMP,'multiProtocolGateway/Demo/fromMQTT/CMD',true)
 }
 
+sendIdentifyCMD = function(GBID,value){
+    CMD_TEMP = JSON.stringify([{"GBID":GBID,"CMD":"0004","VALUE":value}])
+    sendCMDToCoreSystem(CMD_TEMP,'multiProtocolGateway/Demo/fromMQTT/CMD',true)
+}
+
 
 
 
@@ -167,18 +172,18 @@ $(document).ready(function(){
             reportTable.forEach(function(element, index, array) {
                 console.log(element);
                 if(Object.keys(element)[1]=="temperature"){
-                    var content = "<div id=\""+ element['GBID'][0] +"temperature\"><button type=\"button\" class=\""+element['GBID'][0]+" reportBtn btn btn-info\">";
+                    var content = "<div id=\""+ element['GBID'][0] +"temperature\"><button type=\"button\" class=\""+element['GBID'][0]+" reportBtn report-spaceCustom btn btn-info\">";
                     content +="Temperature : ";
                     content += element['temperature'];
                     content += "</button></div>";
                     $('#NodeReport').append(content);
                 }else if(Object.keys(element)[1]=="ias"){
-                    var content = "<div id=\""+ element['GBID'][0] +"ias\"><button type=\"button\" class=\""+element['GBID'][0]+" reportBtn btn btn-danger\">";
+                    var content = "<div id=\""+ element['GBID'][0] +"ias\"><button type=\"button\" class=\""+element['GBID'][0]+" reportBtn report-spaceCustom btn btn-danger\">";
                     content +="IAS : ";
                     content += element['ias'];
                     content += "</button></div>";
                     $('#NodeReport').append(content);
-                }else if(Object.keys(element)[0]=="Light"){
+                }else if(Object.keys(element).indexOf("Light")>=0){
                     var content = "<div id=\""+ element['GBID'][0] +"Light\"><button type=\"button\" class=\""+element['GBID'][0]+" reportBtn btn btn-danger\">";
                     content +="LIGHT : ";
                     content += element['Light'];
@@ -188,7 +193,7 @@ $(document).ready(function(){
                     var value_temp = (element['On/Off'] == 1 ? "ON" : "OFF");
                     $('.'+element['GBID'][0]+'.onoff.CMDBtn.btn').html(value_temp);
                     console.log(element['GBID'][0]);
-                    var Btn_color = (element['On/Off'] == 1 ? element['GBID'][0]+' onoff CMDBtn btn btn-warning' : element['GBID'][0]+' onoff CMDBtn btn btn-default');
+                    var Btn_color = (element['On/Off'] == 1 ? element['GBID'][0]+' onoff CMDBtn btn-spaceCustom btn btn-warning' : element['GBID'][0]+' onoff CMDBtn btn-spaceCustom btn btn-default');
                     $('.'+element['GBID'][0]+'.onoff.CMDBtn.btn').attr('class', Btn_color);
                 }
             });
@@ -259,14 +264,17 @@ $(document).ready(function(){
                     //console.log(i);
                     if(uniqueClusterInArray[i]==="6"){
                         console.log('on/off');
-
-
-
-                        content = "<button type=\"button\" class=\""+element['GBID'][0]+" onoff CMDBtn btn btn-warning\">";
+                        content = "<button type=\"button\" class=\""+element['GBID'][0]+" onoff CMDBtn btn-spaceCustom btn btn-warning\">";
                         content += "ON";
                         content += "</button>";
                         $('#ControlNode').append(content);
                         //$('#'+element['GBID'][0]+'temperature '+'.reportBtn').show();
+                    }else if(uniqueClusterInArray[i]==="3"){
+                        console.log('identify');
+                        content = "<button type=\"button\" class=\""+element['GBID'][0]+" identify CMDBtn btn-spaceCustom btn btn-warning\">";
+                        content += "Identify";
+                        content += "</button>";
+                        $('#ControlNode').append(content);
                     }
                 }
 
@@ -302,14 +310,17 @@ $(document).ready(function(){
                     //console.log(i);
                     if(uniqueClusterInArray[i]==="6"){
                         console.log('on/off');
-
-
-
-                        content = "<button type=\"button\" class=\""+element['GBID'][0]+" onoff CMDBtn btn btn-warning\">";
+                        content = "<button type=\"button\" class=\""+element['GBID'][0]+" onoff CMDBtn btn-spaceCustom btn btn-warning\">";
                         content += "ON";
                         content += "</button>";
                         $('#ControlNode').append(content);
                         //$('#'+element['GBID'][0]+'temperature '+'.reportBtn').show();
+                    }else if(uniqueClusterInArray[i]==="3"){
+                        console.log('identify');
+                        content = "<button type=\"button\" class=\""+element['GBID'][0]+" identify CMDBtn btn-spaceCustom btn btn-warning\">";
+                        content += "Identify";
+                        content += "</button>";
+                        $('#ControlNode').append(content);
                     }
                 }
 
@@ -336,15 +347,14 @@ $(document).ready(function(){
     $( "#StartQuery" ).click(function() {
         $('#StartQuery').prop('disabled', true);
         $('#StopQuery').prop('disabled', false);
-        topologyDiv.clearAllData()
-        sendCMDToCoreSystem('[{"GBID":"0","CMD":"0002","VALUE":"1"}]','multiProtocolGateway/Demo/fromMQTT/CMD',true)
+        topologyDiv.clearAllData();
+        sendCMDToCoreSystem('[{"GBID":"0","CMD":"0002","VALUE":"1"}]','multiProtocolGateway/Demo/fromMQTT/CMD',true);
     });
 
     $( "#StopQuery" ).click(function() {
         $('#StopQuery').prop('disabled', true);
         $('#StartQuery').prop('disabled', false);
-        sendCMDToCoreSystem('[{"GBID":"0","CMD":"0002","VALUE":"0"}]','multiProtocolGateway/Demo/fromMQTT/CMD',true)
-
+        sendCMDToCoreSystem('[{"GBID":"0","CMD":"0002","VALUE":"0"}]','multiProtocolGateway/Demo/fromMQTT/CMD',true);
     });
 
 
@@ -355,7 +365,94 @@ $(document).ready(function(){
         sendOnOffCMD(temp_GBID,temp_value);
     });
 
+    $(document).on('click', '.identify.CMDBtn' , function() {
+        console.log(this);
+        temp_GBID = $(this).attr("class").split(" ")[0];
+        sendIdentifyCMD(temp_GBID,"10");
+    });
+
+    $("[name='NetworkScanSwitch']").bootstrapSwitch();
+    $("[name='NetworkScanSwitch']").bootstrapSwitch('offColor','danger');
+    $("[name='NetworkScanSwitch']").bootstrapSwitch('state',false);
+
+    $("[name='AspectViewSwitch']").bootstrapSwitch();
+    $("[name='AspectViewSwitch']").bootstrapSwitch('onText','NODE');
+    $("[name='AspectViewSwitch']").bootstrapSwitch('offText','DEVICE');
+    $("[name='AspectViewSwitch']").bootstrapSwitch('offColor','primary');
+
+    $('#NodeAspect').prop('disabled', false);
+    $('#DeviceAspect').prop('disabled', true);
+
+    $( "#NodeAspect" ).click(function() {
+        $('#NodeAspect').prop('disabled', true);
+        $('#DeviceAspect').prop('disabled', false);
+    });
+
+    $( "#DeviceAspect" ).click(function() {
+        $('#DeviceAspect').prop('disabled', true);
+        $('#NodeAspect').prop('disabled', false);
+    });
+
+    $('input[name="AspectViewSwitch"]').on('switchChange.bootstrapSwitch', function(event, state) {
+        //console.log(this); // DOM element
+        //console.log(event); // jQuery event
+        //console.log(state); // true | false
+        if(state===true){
+            //node
+            console.log('Node Aspect');
+            //console.log('true');
+            for (i = 0; i < zigbeeTopologyTable['nodes'].length; i++) {
+                if(zigbeeTopologyTable['nodes'][i]['deviceType']==="Aggregator"){
+                    topologyDiv.setGroupToNode(zigbeeTopologyTable['nodes'][i]['GBID'],'','Aggregator');
+                }else if(zigbeeTopologyTable['nodes'][i]['deviceType']==="0"){
+                    topologyDiv.setGroupToNode(zigbeeTopologyTable['nodes'][i]['GBID'],'','ZigBeeCoordinator');
+                }else if(zigbeeTopologyTable['nodes'][i]['deviceType']==="1"){
+                    topologyDiv.setGroupToNode(zigbeeTopologyTable['nodes'][i]['GBID'],'','ZigBeeRouter');
+                }else if(zigbeeTopologyTable['nodes'][i]['deviceType']==="2"){
+                    topologyDiv.setGroupToNode(zigbeeTopologyTable['nodes'][i]['GBID'],'','ZigBeeEndDevice');
+                }else if(zigbeeTopologyTable['nodes'][i]['deviceType']==="ESP8266"){
+                    topologyDiv.setGroupToNode(zigbeeTopologyTable['nodes'][i]['GBID'],'','ESP8266');
+                }
+            }
+        }else{
+            //device
+            //console.log('false');
+            console.log('Device Aspect');
+            topologyDiv.setGroupToNode(0,'image','AggregatorImage');
+            for (i = 0; i < DESCTable.length; i++) {
+                //console.log(DESCTable[i]['GBID']);
+                //console.log(DESCTable[i]['ADID']);
+                if(DESCTable[i]['APID']==='260'){
+                    if(DESCTable[i]['ADID']==='7') {
+                        topologyDiv.setGroupToNode(DESCTable[i]['GBID'][0], 'image', 'ZigBeeCoordinatorImage');
+                    }else if(DESCTable[i]['ADID']==='256') {
+                        topologyDiv.setGroupToNode(DESCTable[i]['GBID'][0], 'image', 'SmartthingSmartPowerOutlet');
+                    }else if(DESCTable[i]['ADID']==='257') {
+                        topologyDiv.setGroupToNode(DESCTable[i]['GBID'][0], 'image', 'DimmableLightOn');
+                    }else if(DESCTable[i]['ADID']==='1026') {
+                        topologyDiv.setGroupToNode(DESCTable[i]['GBID'][0], 'image', 'SmartthingMultiPurposeSensor');
+                    }else if(DESCTable[i]['ADID']==='511') {
+                        //custom device
+                        topologyDiv.setGroupToNode(DESCTable[i]['GBID'][0], 'image', 'ZigBeeCoordinatorImage');
+                    }
+                }
+            }
+        }
+    });
+
+    $('input[name="NetworkScanSwitch"]').on('switchChange.bootstrapSwitch', function(event, state) {
+
+        console.log(this); // DOM element
+        console.log(event); // jQuery event
+        console.log(state); // true | false
+        if(state===true){
+            topologyDiv.clearAllData();
+            sendCMDToCoreSystem('[{"GBID":"0","CMD":"0002","VALUE":"1"}]','multiProtocolGateway/Demo/fromMQTT/CMD',true);
+        }else{
+            sendCMDToCoreSystem('[{"GBID":"0","CMD":"0002","VALUE":"0"}]','multiProtocolGateway/Demo/fromMQTT/CMD',true);
+        }
 
 
+    });
 
 });

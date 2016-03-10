@@ -63,6 +63,22 @@ class CommandSystem(object):
                         print "report Table : "+str(self.report_instance.getReportTable())
                         self.report_instance.addReportDataTable(nwk_temp,'On/Off',i['VALUE'])
                         self.report_instance.updateReportTableToMQTT()
+                    elif CMD_temp == '0004':
+                        #you have to query and get endpoint from node desc because we do not know onoff cluster run on
+                        #which ep but now we assign to 0x11 == ep 17
+                        if nwk_temp[1] == 1:
+                            EP_temp = self.globalnetworkid_instance.getEPFromNodeDESCTable(nwk_temp[0],3)
+                            print EP_temp
+                            EP_temp = str(EP_temp) if EP_temp != [] else "0xff"
+                            self.putCMDToSerialQueue('identify 0x02 '+str(nwk_temp[2])+' '+EP_temp+' "'+value_temp+'"')
+                            print 'DEBUG CMD : ZigBee -> '+str(value_temp)
+
+
+                        elif nwk_temp[1] == 2:
+                            CMD_message_MQTT = [{"MACADDR":str(nwk_temp[2]),"CMD":"0004","VALUE":value_temp}]
+                            #print self.cmdToESP8266+'/'+str(nwk_temp[2])
+                            self.MQTTclient.publish(self.cmdToESP8266+'/'+str(nwk_temp[2]),json.dumps(CMD_message_MQTT),0,True)
+                            print 'DEBUG CMD : ESP -> '+str(nwk_temp[2])
 
 
 

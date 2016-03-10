@@ -23,6 +23,10 @@
 
 		<script type="text/javascript" src="../../bower_components/vis/dist/vis.js"></script>
 
+		<script type="text/javascript" src="../../bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+
+		<link href="../../bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" rel="stylesheet" type="text/css" />
+
 		<script type="text/javascript" src="../../js/mqttProcess.js"></script>
 
         <script type="text/javascript" src="../../js/generateTopology.js"></script>
@@ -54,6 +58,18 @@
 					  </table>
 					</div>
 				  </div> -->
+			<caption>Network Scanning</caption>
+                <!--
+				<button type="button" id ="StartQuery" class="btn btn-danger">Start Query</button>
+				<button type="button" id ="StopQuery" class="btn btn-danger">Stop Query</button>
+                -->
+				<input type="checkbox" name="NetworkScanSwitch" checked>
+			<caption>Layer Aspect Menu</caption>
+				<!--
+				<button type="button" id ="NodeAspect" class="btn btn-danger">Node</button>
+				<button type="button" id ="DeviceAspect" class="btn btn-danger">Device</button>
+				-->
+				<input type="checkbox" name="AspectViewSwitch" checked>
 			<hr>
                 <h3>Topology of All Device</h3>
                 <div class="row">
@@ -65,13 +81,6 @@
 						</div>
 					</div>
 					<div class="col-xs-12 col-md-5">
-						<hr>
-						<div class="row">
-								<caption>Config Menu</caption>
-								<button type="button" id ="StartQuery" class="btn btn-danger">Start Query</button>
-								<button type="button" id ="StopQuery" class="btn btn-danger">Stop Query</button>
-						</div>
-						<hr>
 						<caption>Sensor Report</caption>
 						<div id="NodeReport" class="row">
 

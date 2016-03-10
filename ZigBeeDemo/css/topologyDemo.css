@@ -3,3 +3,10 @@
     height: 400px;
     border: 1px solid lightgray;
 }
+.btn-spaceCustom {
+    margin-right: 10px;
+}
+
+.report-spaceCustom {
+    margin-top: 10px;
+}

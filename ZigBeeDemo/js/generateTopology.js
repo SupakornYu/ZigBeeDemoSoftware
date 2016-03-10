@@ -47,10 +47,35 @@ function TopologyGen(nodes,edges){
                 color: 'green'
             },
             Aggregator: {
+                shape: '',
                 color: 'yellow'
             },
             ESP8266: {
                 color: 'Blue'
+            },
+            DimmableLightOn: {
+                shape: 'image',
+                image : '../../img/bulbon.png'
+            },
+            DimmableLightOff: {
+                shape: 'image',
+                image : '../../img/bulboff.png'
+            },
+            SmartthingMultiPurposeSensor: {
+                shape: 'image',
+                image : '../../img/smartthing_multipurpose_sensor.png'
+            },
+            AggregatorImage: {
+                shape: 'image',
+                image : '../../img/Aggregator.jpg'
+            },
+            ZigBeeCoordinatorImage: {
+                shape: 'image',
+                image : '../../img/AtmelSamR21.jpg'
+            },
+            SmartthingSmartPowerOutlet: {
+                shape: 'image',
+                image : '../../img/SmartThing_SmartPower_Outlet.gif'
             }
         }
     };
@@ -247,8 +272,14 @@ TopologyGen.prototype.clearAllData = function clearAllData() {
 
 };
 
-TopologyGen.prototype.getInstanceObj = function clearAllData() {
+TopologyGen.prototype.getInstanceObj = function getInstanceObj() {
 
     return network
+
+};
+
+TopologyGen.prototype.setGroupToNode = function setGroupToNode(id,shape,group) {
+
+    this.getNode().update({ id: id , shape:shape , group:group })
 
 };
