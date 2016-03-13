@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d345364c-b5d1-4d27-9e92-20bef217b240" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CoreSystem/commandSystem/commandSystem.py" afterPath="$PROJECT_DIR$/CoreSystem/commandSystem/commandSystem.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ZigBeeDemo/css/topologyDemo.css" afterPath="$PROJECT_DIR$/ZigBeeDemo/css/topologyDemo.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ZigBeeDemo/html/webDemo/indexMQTT.html" afterPath="$PROJECT_DIR$/ZigBeeDemo/html/webDemo/indexMQTT.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ZigBeeDemo/js/generateTopology.js" afterPath="$PROJECT_DIR$/ZigBeeDemo/js/generateTopology.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ZigBeeDemo/js/mqttProcess.js" afterPath="$PROJECT_DIR$/ZigBeeDemo/js/mqttProcess.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ciTeminalSerial/ciClient.py" afterPath="$PROJECT_DIR$/ciTeminalSerial/ciClient.py" />
     </list>
     <ignored path="iotDemo.iws" />
@@ -23,12 +19,12 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/iotDemo$mqttTest.coverage" NAME="mqttTest Coverage Results" MODIFIED="1447783894373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/MQTTTest" />
     <SUITE FILE_PATH="coverage/iotDemo$ESP8266Management.coverage" NAME="ESP8266Management Coverage Results" MODIFIED="1454430680608" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CoreSystem/ESP8266Core" />
-    <SUITE FILE_PATH="coverage/iotDemo$ciMQTTZigBeeClient.coverage" NAME="ciMQTTZigBeeClient Coverage Results" MODIFIED="1457627403845" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ciZigBeeClient" />
+    <SUITE FILE_PATH="coverage/iotDemo$ciMQTTZigBeeClient.coverage" NAME="ciMQTTZigBeeClient Coverage Results" MODIFIED="1457847561688" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ciZigBeeClient" />
     <SUITE FILE_PATH="coverage/iotDemo$commandSystem.coverage" NAME="commandSystem Coverage Results" MODIFIED="1456329229951" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CoreSystem/commandSystem" />
     <SUITE FILE_PATH="coverage/iotDemo$GlobalNetworkIdManagement.coverage" NAME="GlobalNetworkIdManagement Coverage Results" MODIFIED="1454318622216" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CoreSystem/GlobalNetworkIdSystem" />
     <SUITE FILE_PATH="coverage/iotDemo$ciSimpleClientAndServer.coverage" NAME="ciSimpleClientAndServer Coverage Results" MODIFIED="1447308655329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ciSimplyServerAndClient" />
     <SUITE FILE_PATH="coverage/iotDemo$GenerateGlobalNetworkID.coverage" NAME="GenerateGlobalNetworkID Coverage Results" MODIFIED="1454065684002" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/CoreSystem/GenerateGlobalNetworkID" />
-    <SUITE FILE_PATH="coverage/iotDemo$ciClient.coverage" NAME="ciClient Coverage Results" MODIFIED="1457603352848" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ciTeminalSerial" />
+    <SUITE FILE_PATH="coverage/iotDemo$ciClient.coverage" NAME="ciClient Coverage Results" MODIFIED="1457794951553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ciTeminalSerial" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -51,11 +47,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mqttProcess.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mqttProcess.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ZigBeeDemo/js/mqttProcess.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.728013">
-              <caret line="393" column="5" selection-start-line="393" selection-start-column="5" selection-end-line="393" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="439" column="9" selection-start-line="439" selection-start-column="9" selection-end-line="439" selection-end-column="9" />
               <folding>
                 <element signature="e#0#42#0" expanded="false" />
                 <marker date="1457631851674" expanded="true" signature="8833:8872" placeholder="..." />
@@ -82,11 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="generateTopology.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="generateTopology.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ZigBeeDemo/js/generateTopology.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.5172415">
-              <caret line="267" column="46" selection-start-line="267" selection-start-column="46" selection-end-line="267" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.4869707">
+              <caret line="50" column="30" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="30" />
               <folding>
                 <element signature="n#!!doc;n#TopologyGen#0" expanded="false" />
               </folding>
@@ -98,7 +94,7 @@
         <entry file="file://$PROJECT_DIR$/ciTeminalSerial/ciClient.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+              <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
               <folding>
                 <element signature="e#41#54#0" expanded="true" />
               </folding>
@@ -211,12 +207,12 @@
         <option value="$PROJECT_DIR$/CoreSystem/ESP8266Core/ESP8266Management.py" />
         <option value="$PROJECT_DIR$/ciZigBeeClient/BuildciMQTTZigBeeClient.py" />
         <option value="$PROJECT_DIR$/CoreSystem/reportValueSystem/reportValue.py" />
-        <option value="$PROJECT_DIR$/ZigBeeDemo/js/generateTopology.js" />
-        <option value="$PROJECT_DIR$/ciTeminalSerial/ciClient.py" />
         <option value="$PROJECT_DIR$/ZigBeeDemo/css/topologyDemo.css" />
         <option value="$PROJECT_DIR$/CoreSystem/commandSystem/commandSystem.py" />
         <option value="$PROJECT_DIR$/ZigBeeDemo/js/mqttProcess.js" />
         <option value="$PROJECT_DIR$/ZigBeeDemo/html/webDemo/indexMQTT.html" />
+        <option value="$PROJECT_DIR$/ciTeminalSerial/ciClient.py" />
+        <option value="$PROJECT_DIR$/ZigBeeDemo/js/generateTopology.js" />
       </list>
     </option>
   </component>
@@ -605,7 +601,7 @@
       <recent name="F:\ProjectProgram\webDemo\iotDemo" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.ciMQTTZigBeeClient">
+  <component name="RunManager" selected="Python.ciClient">
     <configuration default="false" name="ciClient" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -1339,16 +1335,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ciTeminalSerial/ciClient.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
-          <folding>
-            <element signature="e#41#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ZigBeeDemo/img/Aggregator.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1400,12 +1386,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ZigBeeDemo/js/generateTopology.js">
+    <entry file="file://$PROJECT_DIR$/ciTeminalSerial/ciClient.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.5172415">
-          <caret line="267" column="46" selection-start-line="267" selection-start-column="46" selection-end-line="267" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
           <folding>
-            <element signature="n#!!doc;n#TopologyGen#0" expanded="false" />
+            <element signature="e#41#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1422,8 +1408,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ZigBeeDemo/js/mqttProcess.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.728013">
-          <caret line="393" column="5" selection-start-line="393" selection-start-column="5" selection-end-line="393" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="439" column="9" selection-start-line="439" selection-start-column="9" selection-end-line="439" selection-end-column="9" />
           <folding>
             <element signature="e#0#42#0" expanded="false" />
             <marker date="1457631851674" expanded="true" signature="8833:8872" placeholder="..." />
@@ -1435,6 +1421,16 @@
             <marker date="1457631851674" expanded="true" signature="11315:11520" placeholder="..." />
             <marker date="1457631851674" expanded="true" signature="11357:11400" placeholder="..." />
             <marker date="1457631851674" expanded="true" signature="11402:11520" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ZigBeeDemo/js/generateTopology.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4869707">
+          <caret line="50" column="30" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="30" />
+          <folding>
+            <element signature="n#!!doc;n#TopologyGen#0" expanded="false" />
           </folding>
         </state>
       </provider>

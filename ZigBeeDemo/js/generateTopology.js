@@ -48,7 +48,7 @@ function TopologyGen(nodes,edges){
             },
             Aggregator: {
                 shape: '',
-                color: 'yellow'
+                color: 'violet'
             },
             ESP8266: {
                 color: 'Blue'
