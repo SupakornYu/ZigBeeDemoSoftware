@@ -49,9 +49,13 @@ class reportValue(object):
         if msg.topic == self.pathMqttGetReportESP8266:
             temp_list_payload = json.loads(msg.payload)
             for i in temp_list_payload:
-                GBID_temp = self.globalnetworkid_instance.getGlobalId(2,i['MACADDR'])[0]
-                self.addReportDataTable(GBID_temp,'temperature',i['Temperature'])
-                self.addReportDataTable(GBID_temp,'Light',i['Light'])
+                try:
+                    GBID_temp = self.globalnetworkid_instance.getGlobalId(2,i['MACADDR'])[0]
+                    self.addReportDataTable(GBID_temp,'temperature',i['Temperature'])
+                    self.addReportDataTable(GBID_temp,'Light',i['Light'])
+                except Exception as e:
+                    print "Please Regiter nodeMCU again MacAddr : "+str(i['MACADDR'])
+                    print self.globalnetworkid_instance.getGlobalId(2,i['MACADDR'])
             self.updateReportTableToMQTT()
 
     def setReportFlagRunner(self,temp_flag):

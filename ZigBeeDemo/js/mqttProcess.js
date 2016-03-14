@@ -171,13 +171,13 @@ $(document).ready(function(){
             $('#NodeReport').empty();
             reportTable.forEach(function(element, index, array) {
                 console.log(element);
-                if(Object.keys(element)[1]=="temperature"){
+                if(Object.keys(element).indexOf("temperature")>=0){
                     var content = "<div id=\""+ element['GBID'][0] +"temperature\"><button type=\"button\" class=\""+element['GBID'][0]+" reportBtn report-spaceCustom btn btn-info\">";
                     content +="Temperature : ";
                     content += element['temperature'];
                     content += "</button></div>";
                     $('#NodeReport').append(content);
-                }else if(Object.keys(element)[1]=="ias"){
+                }else if(Object.keys(element).indexOf("ias")>=0){
                     var content = "<div id=\""+ element['GBID'][0] +"ias\"><button type=\"button\" class=\""+element['GBID'][0]+" reportBtn report-spaceCustom btn btn-danger\">";
                     content +="IAS : ";
                     content += element['ias'];
@@ -264,9 +264,26 @@ $(document).ready(function(){
                     //console.log(i);
                     if(uniqueClusterInArray[i]==="6"){
                         console.log('on/off');
-                        content = "<button type=\"button\" class=\""+element['GBID'][0]+" onoff CMDBtn btn-spaceCustom btn btn-warning\">";
-                        content += "ON";
+
+                        temp_re = $.grep(reportTable, function(e){ return e['GBID'][0] == element['GBID'][0] && Object.keys(e).indexOf('On/Off')>=0; });
+                        if(temp_re.length > 0){
+                            if(temp_re[0]['On/Off'] === "1"){
+                                temp_statusBtn = "ON";
+                                temp_statusColorBtn = "btn-warning";
+                            }else{
+                                temp_statusBtn = "OFF";
+                                temp_statusColorBtn = "btn-default";
+                            }
+                        }else{
+                            temp_statusBtn = "ON";
+                            temp_statusColorBtn = "btn-warning";
+                        }
+                        content = "<button type=\"button\" class=\""+element['GBID'][0]+" onoff CMDBtn btn-spaceCustom btn "+temp_statusColorBtn+"\">";
+                        content += temp_statusBtn;
+
                         content += "</button>";
+
+
                         $('#ControlNode').append(content);
                         //$('#'+element['GBID'][0]+'temperature '+'.reportBtn').show();
                     }else if(uniqueClusterInArray[i]==="3"){
@@ -310,9 +327,32 @@ $(document).ready(function(){
                     //console.log(i);
                     if(uniqueClusterInArray[i]==="6"){
                         console.log('on/off');
+                        /*
                         content = "<button type=\"button\" class=\""+element['GBID'][0]+" onoff CMDBtn btn-spaceCustom btn btn-warning\">";
                         content += "ON";
                         content += "</button>";
+                        */
+
+                        temp_re = $.grep(reportTable, function(e){ return e['GBID'][0] == element['GBID'][0] && Object.keys(e).indexOf('On/Off')>=0; });
+                        if(temp_re.length > 0){
+                            if(temp_re[0]['On/Off'] === "1"){
+                                temp_statusBtn = "ON";
+                                temp_statusColorBtn = "btn-warning";
+                            }else{
+                                temp_statusBtn = "OFF";
+                                temp_statusColorBtn = "btn-default";
+                            }
+                        }else{
+                            temp_statusBtn = "ON";
+                            temp_statusColorBtn = "btn-warning";
+                        }
+                        content = "<button type=\"button\" class=\""+element['GBID'][0]+" onoff CMDBtn btn-spaceCustom btn "+temp_statusColorBtn+"\">";
+                        content += temp_statusBtn;
+
+                        content += "</button>";
+
+
+
                         $('#ControlNode').append(content);
                         //$('#'+element['GBID'][0]+'temperature '+'.reportBtn').show();
                     }else if(uniqueClusterInArray[i]==="3"){

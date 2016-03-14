@@ -37,7 +37,9 @@ class ZigBeeDESC(object):
         while True:
             tempList = self.storeNetworkAddressList_queue.get()
             self.queryActiveEndpoints_Condition.acquire()
-            self.globalnetworkid_instance.cleanNodeDescTableWithDeviceType(1)
+
+            #self.globalnetworkid_instance.cleanNodeDescTableWithDeviceType(1)
+
             for tempEach in tempList:
                 self.queryActiveEndpoints(tempEach['NWK id'])
                 self.queryActiveEndpoints_Condition.wait(60)
