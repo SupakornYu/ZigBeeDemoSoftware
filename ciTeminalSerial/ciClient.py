@@ -11,7 +11,7 @@ import time
 
 def initSerial():
     sp = serial.Serial()
-    sp.port = 'COM10'
+    sp.port = 'COM13'
     sp.baudrate = 38400
     sp.parity = serial.PARITY_NONE
     sp.bytesize = serial.EIGHTBITS
