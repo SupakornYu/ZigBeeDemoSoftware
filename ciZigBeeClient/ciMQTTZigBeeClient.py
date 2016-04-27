@@ -36,7 +36,7 @@ commandSystem_instance = commandSystem.CommandSystem(GlobalNetworkIdManagement_i
 #config Serial port
 def initSerial():
     sp = serial.Serial()
-    sp.port = 'COM5'
+    sp.port = 'COM3'
     sp.baudrate = 38400
     sp.parity = serial.PARITY_NONE
     sp.bytesize = serial.EIGHTBITS
@@ -142,17 +142,25 @@ def processTopology():
                 for i in range(2,len(temp)):
 
                     #filter sometime they will return coordinator address.
-                    if not(int(temp[i].split(',')[0].split(':')[1].split()[0]) == 0 or (int(temp[i].split(',')[0].split(':')[1].split()[0]) in hisRouterList) or ({'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])} in routerList)):
-                        tempNode = {}
-                        tempNode = {'NWK id':temp[i].split(',')[0].split(':')[1].split()[0],'LQI':temp[i].split(',')[1].split(':')[1].split()[0],'deviceType':temp[i].split(',')[3].split(':')[1].split()[0],'IEEEAddr':temp[i].split(',')[4].split(':')[1].split()[0]}
-                        tempLink = {}
-                        tempLink = {'from':temp[1].split(',')[0].split(':')[1].split()[0],'to':temp[i].split(',')[0].split(':')[1].split()[0]}
-                        nodes.append(tempNode)
-                        links.append(tempLink)
-                        if(int(temp[i].split(',')[3].split(':')[1].split()[0])==1):
-                            if int(temp[i].split(',')[0].split(':')[1].split()[0]) not in hisRouterList:
-                                print {'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])}
-                                routerList.append({'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])})
+
+                    try:
+                        if not(int(temp[i].split(',')[0].split(':')[1].split()[0]) == 0 or (int(temp[i].split(',')[0].split(':')[1].split()[0]) in hisRouterList) or ({'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])} in routerList)):
+                            tempNode = {}
+                            tempNode = {'NWK id':temp[i].split(',')[0].split(':')[1].split()[0],'LQI':temp[i].split(',')[1].split(':')[1].split()[0],'deviceType':temp[i].split(',')[3].split(':')[1].split()[0],'IEEEAddr':temp[i].split(',')[4].split(':')[1].split()[0]}
+                            tempLink = {}
+                            tempLink = {'from':temp[1].split(',')[0].split(':')[1].split()[0],'to':temp[i].split(',')[0].split(':')[1].split()[0]}
+                            nodes.append(tempNode)
+                            links.append(tempLink)
+                            if(int(temp[i].split(',')[3].split(':')[1].split()[0])==1):
+                                if int(temp[i].split(',')[0].split(':')[1].split()[0]) not in hisRouterList:
+                                    print {'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])}
+                                    routerList.append({'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])})
+                    except Exception as inst:
+                        print "ERROR"
+                        print type(inst)
+                        print inst.args
+                        print inst
+
                     print 'router List'
                     print routerList
                         #type query recursive
