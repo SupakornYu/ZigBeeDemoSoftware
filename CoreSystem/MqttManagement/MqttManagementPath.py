@@ -2,6 +2,9 @@ MQTT_SERVER_IP = "188.166.233.211"
 MQTT_SERVER_PORT = 1883
 MQTT_SERVER_KEEPALIVE = 60
 
+CSVPATH = "/"
+MONGODB_PATH = "mongodb://127.0.0.1:27017"
+
 GLOBAL_ID_TOPIC_SEND = 'multiProtocolGateway/Demo/toMQTT/GlobalId'
 GLOBAL_DESC_NODE_SEND = 'multiProtocolGateway/Demo/toMQTT/GlobalDESC'
 

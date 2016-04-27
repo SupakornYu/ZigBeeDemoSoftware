@@ -36,7 +36,7 @@ commandSystem_instance = commandSystem.CommandSystem(GlobalNetworkIdManagement_i
 #config Serial port
 def initSerial():
     sp = serial.Serial()
-    sp.port = 'COM3'
+    sp.port = 'COM5'
     sp.baudrate = 38400
     sp.parity = serial.PARITY_NONE
     sp.bytesize = serial.EIGHTBITS
@@ -117,7 +117,7 @@ def deleteDictionaryFromList(temp,key,id):
 
 def processTopology():
     routerList = [{'NWK id':0}]
-    nodes = [{'NWK id': '0', 'LQI': '0', 'deviceType': '0'}]
+    nodes = [{'IEEEAddr': '0x0','NWK id': '0', 'LQI': '0', 'deviceType': '0'}]
     links = []
     hisRouterList = []
     flagExecuteProcessTopology = True
@@ -144,7 +144,7 @@ def processTopology():
                     #filter sometime they will return coordinator address.
                     if not(int(temp[i].split(',')[0].split(':')[1].split()[0]) == 0 or (int(temp[i].split(',')[0].split(':')[1].split()[0]) in hisRouterList) or ({'NWK id':int(temp[i].split(',')[0].split(':')[1].split()[0])} in routerList)):
                         tempNode = {}
-                        tempNode = {'NWK id':temp[i].split(',')[0].split(':')[1].split()[0],'LQI':temp[i].split(',')[1].split(':')[1].split()[0],'deviceType':temp[i].split(',')[3].split(':')[1].split()[0]}
+                        tempNode = {'NWK id':temp[i].split(',')[0].split(':')[1].split()[0],'LQI':temp[i].split(',')[1].split(':')[1].split()[0],'deviceType':temp[i].split(',')[3].split(':')[1].split()[0],'IEEEAddr':temp[i].split(',')[4].split(':')[1].split()[0]}
                         tempLink = {}
                         tempLink = {'from':temp[1].split(',')[0].split(':')[1].split()[0],'to':temp[i].split(',')[0].split(':')[1].split()[0]}
                         nodes.append(tempNode)
@@ -197,7 +197,7 @@ def processTopology():
 
     dataSend = {'nodes':nodes,'links':links}
     for i in range(0,len(dataSend['nodes'])):
-        GlobalNetworkIdManagement_instance.registerNewDevice(1,dataSend['nodes'][i]['NWK id'])
+        GlobalNetworkIdManagement_instance.registerNewDevice(1,dataSend['nodes'][i]['NWK id'],dataSend['nodes'][i]['IEEEAddr'])
         dataSend['nodes'][i]['GBID'] = GlobalNetworkIdManagement_instance.getGlobalId(1,dataSend['nodes'][i]['NWK id'])[0][0]
     #convert link nwk address to GBID
     for i in range(0,len(dataSend['links'])):

@@ -30,7 +30,7 @@ class ESP8266Management(object):
         #get data add to globaltable
         if msg.topic == MqttManagementPath.ESP8266_REGISTER_NEW_DEVICE_TOPIC_GET:
             regis_message = json.loads(msg.payload)[0]
-            self.globalnetworkid_instance.registerNewDevice(2,regis_message['MACADDR'])
+            self.globalnetworkid_instance.registerNewDevice(2,regis_message['MACADDR'],regis_message['MACADDR'])
             self.globalnetworkid_instance.updateGlobalTableToMqtt()
 
             GBID_temp = self.globalnetworkid_instance.getGlobalId(2,regis_message['MACADDR'])[0]

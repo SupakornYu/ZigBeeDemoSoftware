@@ -7,6 +7,7 @@ import paho.mqtt.client as mqtt
 #sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '../..'))
 from CoreSystem.MqttManagement import MqttManagementPath
 import json
+import GlobalTableCache
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -17,13 +18,24 @@ class GlobalNetworkIdManagement(object):
     #globalTable [globalId,deviceTechType,localNetworkId]
     def __init__(self,start=1):
 
+        #loading GBID from mongodb cache
+        self.GlobalTableCache_instance = GlobalTableCache.GlobalTableCache()
+        if self.GlobalTableCache_instance.getGBIDCount() != None:
+            self.temp_GBIDCount = self.GlobalTableCache_instance.getGBIDCount()
+        else:
+            self.temp_GBIDCount = start
+            self.GlobalTableCache_instance.updateGBIDCount(self.temp_GBIDCount)
+
         self.pathMqttGlobalTable = MqttManagementPath.GLOBAL_ID_TOPIC_SEND
         self.pathMqttNodeDescTable = MqttManagementPath.GLOBAL_DESC_NODE_SEND
         self.MQTTclient = mqtt.Client()
         self.startMQTTserver()
 
         self.lock = threading.Lock()
-        self.globalId = start
+
+
+        self.globalId = self.temp_GBIDCount
+
         self.globalTable = []
         self.nodeDescTable = []
         logging.debug('GlobalNetworkIdManagement init')
@@ -52,16 +64,24 @@ class GlobalNetworkIdManagement(object):
         self.MQTTclient.publish(self.pathMqttNodeDescTable,json.dumps(self.nodeDescTable),0,True)
 
     #deviceTechType zigbeeHA=1,ESP8266=2
-    def registerNewDevice(self,deviceTechType,localNetworkId):
+    def registerNewDevice(self,deviceTechType,localNetworkId,uniqueValue):
         #logging.debug('Waiting for lock')
         self.lock.acquire()
         try:
             #logging.debug('Acquired lock')
             if [d for d in self.globalTable if d[1] ==deviceTechType and d[2] ==localNetworkId] == []:
                 tempRow = []
-                tempRow = [self.globalId,deviceTechType,localNetworkId]
+                #get GBID from cache
+                temp_GBIDFromCache = self.GlobalTableCache_instance.getGBIDCache(deviceTechType,uniqueValue)
+                if temp_GBIDFromCache != None:
+                    tempRow = [temp_GBIDFromCache,deviceTechType,localNetworkId]
+                else:
+                    tempRow = [self.globalId,deviceTechType,localNetworkId]
+                    self.GlobalTableCache_instance.addNewDevice(self.globalId,deviceTechType,uniqueValue)
+                    self.globalId = self.globalId + 1
+                    self.GlobalTableCache_instance.updateGBIDCount(self.globalId)
                 self.globalTable.append(tempRow)
-                self.globalId = self.globalId + 1
+
             #else:
                 #logging.debug('Already contained')
         finally:
