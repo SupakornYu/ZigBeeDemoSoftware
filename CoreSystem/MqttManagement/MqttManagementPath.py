@@ -14,3 +14,5 @@ CORE_CMD_FROM_CLIENT = 'multiProtocolGateway/Demo/fromMQTT/CMD'
 ESP8266_REGISTER_NEW_DEVICE_TOPIC_GET = 'multiProtocolGateway/Demo/fromMQTT/ESP8266/registerNewDevice'
 ESP8266_CMD_FROM_CORE_TO_NODE_SEND = 'multiProtocolGateway/Demo/toMQTT/ESP8266/CMD' #+ChipID
 ESP8266_REPORT_FROM_NODE_TO_CORE_GET = 'multiProtocolGateway/Demo/toMQTT/ESP8266/REPORT'
+ESP8266_REPORT_FROM_NODE_TO_CORE_GET = 'multiProtocolGateway/Demo/toMQTT/ESP8266/REPORT'
+ESP8266_REPORT_LAST_WILL_TESTAMENT = 'multiProtocolGateway/Demo/toMQTT/ESP8266/UnExpectExit'

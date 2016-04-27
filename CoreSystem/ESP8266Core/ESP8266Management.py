@@ -22,13 +22,17 @@ class ESP8266Management(object):
     def on_connect(self,client, userdata, flags, rc):
         #print("Connected with result code "+str(rc))
         #client.subscribe("/ZigBeeAtmel/toMQTT")
+        self.MQTTclient.publish(MqttManagementPath.ESP8266_REGISTER_NEW_DEVICE_TOPIC_GET,json.dumps([]),0,True)
+        self.MQTTclient.publish(MqttManagementPath.ESP8266_REPORT_LAST_WILL_TESTAMENT,json.dumps([]),0,True)
         client.subscribe(MqttManagementPath.ESP8266_REGISTER_NEW_DEVICE_TOPIC_GET)
         client.subscribe(MqttManagementPath.ESP8266_REPORT_FROM_NODE_TO_CORE_GET)
+        client.subscribe(MqttManagementPath.ESP8266_REPORT_LAST_WILL_TESTAMENT)
         #client.subscribe(self.pathMqtt)
 
     def on_message(self,client, userdata, msg):
         #get data add to globaltable
-        if msg.topic == MqttManagementPath.ESP8266_REGISTER_NEW_DEVICE_TOPIC_GET:
+        #print msg.topic
+        if msg.topic == MqttManagementPath.ESP8266_REGISTER_NEW_DEVICE_TOPIC_GET and json.loads(msg.payload) != []:
             regis_message = json.loads(msg.payload)[0]
             self.globalnetworkid_instance.registerNewDevice(2,regis_message['MACADDR'],regis_message['MACADDR'])
             self.globalnetworkid_instance.updateGlobalTableToMqtt()
@@ -36,8 +40,18 @@ class ESP8266Management(object):
             GBID_temp = self.globalnetworkid_instance.getGlobalId(2,regis_message['MACADDR'])[0]
             self.globalnetworkid_instance.addDescDevice(GBID_temp,regis_message['EP'],regis_message['APID'],regis_message['ADID'],regis_message['ClusterIn'],regis_message['ClusterOut'])
             self.globalnetworkid_instance.updateNodeDescTable()
-
-
+        elif msg.topic == MqttManagementPath.ESP8266_REPORT_LAST_WILL_TESTAMENT and json.loads(msg.payload) != []:
+            regis_message = json.loads(msg.payload)[0]
+            GBID_temp = self.globalnetworkid_instance.getGlobalId(2,regis_message['MACADDR'])[0]
+            self.globalnetworkid_instance.delDescDevice(GBID_temp)
+            self.globalnetworkid_instance.delDeviceFromGlobalTable(2,regis_message['MACADDR'])
+            '''
+            print "GLOBAL TABLE"
+            print regis_message
+            print self.globalnetworkid_instance.getGlobalTable()
+            '''
+            self.globalnetworkid_instance.updateGlobalTableToMqtt()
+            self.globalnetworkid_instance.updateNodeDescTable()
 
         print(msg.topic+" "+str(msg.payload))
 

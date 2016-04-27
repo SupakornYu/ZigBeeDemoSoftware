@@ -96,6 +96,14 @@ class GlobalNetworkIdManagement(object):
     def getGlobalId(self,deviceTechType,localNetworkId):
         return [d for d in self.globalTable if d[1] == deviceTechType and d[2] == localNetworkId]
 
+    def delDeviceFromGlobalTable(self,deviceTechType,localNetworkId):
+        '''
+        print "delDeviceFromGlobalTable"
+        print deviceTechType
+        print localNetworkId
+        '''
+        self.globalTable = [d for d in self.globalTable if not(d[1] ==deviceTechType and d[2] ==localNetworkId)]
+
     def addDescDevice(self,GBID,EP,APID,ADID,ClusterIn,ClusterOut):
         #check duplicate if true record should be updated
         if [d for d in self.nodeDescTable if d['GBID']==GBID and d['EP']==EP] == []:
